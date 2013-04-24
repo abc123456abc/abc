@@ -1,1 +1,866 @@
 aa
+
+
+  -----------WorkFlowController 
+
+package com.cnk.travelerpibe.workflow;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.cnk.travelerpibe.TravelERPController;
+
+/*import com.cnk.workflow.entities.ProductPojo;
+import com.cnk.workflow.service.IProductService;*/
+
+
+
+//@SessionAttributes({ "username", "roleType" })
+@Controller
+public class WorkFlowController extends TravelERPController{
+
+	
+	public HttpSession session;
+	/*@Autowired
+	IProductService iProductService;*/
+	
+	@RequestMapping(value = "/homePage", method = RequestMethod.GET)
+	public String homePage() {
+
+		return "Home";
+	}
+
+	@RequestMapping(value = "/showUser", method = RequestMethod.GET)
+	public String showUser() {
+
+		return "UserDetail";
+	}
+
+	// for spring sequrity
+
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public String login(ModelMap model) {
+
+		return "login";
+
+	}
+
+	@RequestMapping(value = "/welcome", method = RequestMethod.GET)
+	public String printWelcome(ModelMap model, HttpServletRequest request) throws Exception {
+
+		String loginpage = null;
+
+		loginpage= "home";
+		
+		String userName = (String)SecurityContextHolder.getContext().getAuthentication().getName();
+		String roleType = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
+		//HttpSession session = request.getSession(true);
+		 session = request.getSession(true);
+		this.putSession(userName, roleType, session);
+		
+		Object userAuthorties = SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+		System.out.println(userName+"======================First-2=================="+userAuthorties.toString());
+		
+		
+		//if (userAuthorties.toString().contains("manager"))
+		if (userAuthorties.toString().contains("airManager") || userAuthorties.toString().contains("accomManager") || userAuthorties.toString().contains("manager"))
+		{
+			
+			//List<ProductPojo> productList=iProductService.productList();
+			//System.out.println(productList.size());
+			
+			//model.addAttribute("productList", productList);
+			
+			loginpage = "manager_home";
+		}
+		else if (userAuthorties.toString().contains("configurator")) 
+		{
+			loginpage = "configrator_home";
+			//loginpage="redirect:craeteProductPageCall";
+			
+		} 
+		//else if (userAuthorties.toString().contains("reviewer")) 
+		else if (userAuthorties.toString().contains("reviewer")||userAuthorties.toString().contains("airReviewer")||userAuthorties.toString().contains("accomReviewer"))
+		{
+			loginpage = "reviewer_home";
+		}
+
+		else
+		{
+			loginpage = "login";
+		}
+
+		model.addAttribute("userName", userName);
+		//model.addAttribute("",userAuthorties.toString());
+
+		// model.addAttribute("message", "Spring Security login  ");
+		return loginpage;
+
+	}
+
+	@RequestMapping(value = "/loginfailed", method = RequestMethod.GET)
+	public String loginerror(ModelMap model) {
+
+		model.addAttribute("error", "true");
+		return "login";
+
+	}
+
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public String logout(ModelMap model, HttpServletRequest request) {
+
+		
+		 request.getSession().invalidate();
+		//session.invalidate();
+		return "redirect:login";
+
+	}
+	
+	public HttpSession getMySession()
+	{
+		return session;
+	}
+
+}
+=================================================================end===================
+
+		-----------------ActivitiController 
+
+package com.cnk.travelerpibe.workflow;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.activiti.engine.HistoryService;
+import org.activiti.engine.IdentityService;
+import org.activiti.engine.RepositoryService;
+import org.activiti.engine.RuntimeService;
+import org.activiti.engine.TaskService;
+import org.activiti.engine.history.HistoricTaskInstance;
+import org.activiti.engine.task.Task;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.cnk.travelerpibe.TravelERPController;
+import com.cnk.travelerpibe.product.action.DisplayAirProduct;
+import com.cnk.travelerpibe.product.air.vo.AirLineProductVO;
+import com.cnk.travelerpibe.workflow.bean.RemarkBean;
+import com.cnk.travelerpibe.workflow.service.GenericWorkFlowService;
+import com.cnk.travelerpibe.workflow.service.IProcessLockingService;
+import com.cnk.travelerpibe.workflow.service.IProductService;
+
+@Controller
+public class ActivitiController extends TravelERPController {
+
+	@Autowired
+	RuntimeService runtimeService;
+
+	@Autowired
+	TaskService taskService;
+
+	@Autowired
+	HistoryService historyService;
+
+	@Autowired
+	RepositoryService repositoryService;
+
+	@Autowired
+	IProductService iProductService;
+
+	@Autowired
+	IProcessLockingService processLockingService;
+
+	@Autowired
+	IdentityService identityService;
+
+	@Autowired
+	GenericWorkFlowService genericWorkFlowService;
+
+	@Autowired
+	DisplayAirProduct displayAirProduct;
+	
+	private String uName="";
+
+	@RequestMapping(value = "/ViewTaskCreate", method = RequestMethod.GET)
+	public String ViewTaskCreate(ModelMap model, HttpServletRequest request)
+			throws Exception {
+
+		 uName = (String) getUser().getUsername();
+
+	
+		List<Task> task = genericWorkFlowService.getTaskDetailsByUser(uName);
+		model.addAttribute("task", task);
+		
+		
+		List<Task> groupTask = genericWorkFlowService.getTaskDetailsByGroup("configurator");
+		model.addAttribute("groupTask", groupTask);
+		
+		System.out.println("Total SDize "+groupTask.size());
+
+		return "ViewTaskForCreate";
+	}
+
+	// This is for calling ProductCreation Page means when u click on createproduct link at the time this method invoked
+	@RequestMapping(value = "/craeteProduct", method = RequestMethod.GET)
+	public String productCreatePageCall(String taskId) throws Exception {
+
+		return "redirect:viewAirProductFlow?taskId=" + taskId;
+
+	}
+
+	@RequestMapping(value = "/backToHome", method = RequestMethod.GET)
+	public String backToHome(ModelMap model, HttpServletRequest request)
+			throws Exception {
+		return "redirect:welcome";
+
+	}
+
+	// code for ReviePage Call
+
+	@RequestMapping(value = "/reviewPageCall", method = RequestMethod.GET)
+	public String reviewPageCall(ModelMap model, HttpServletRequest request)
+			throws Exception {
+
+		 uName = (String) getUser().getUsername();
+
+		// This is based on assigne name
+		
+		List<Task> assigneeTask = genericWorkFlowService.getTaskDetailsByUser(uName);
+
+		// This is based on Group Name
+		String airReviewerGroupName = "";
+		Collection<GrantedAuthority> tempGroup = getUser().getAuthorities();
+		for (GrantedAuthority ug : tempGroup)
+			airReviewerGroupName = ug.getAuthority();
+
+		
+		
+		List<Task> task = genericWorkFlowService.getTaskDetailsByGroup(airReviewerGroupName);
+		
+		model.addAttribute("task", task);
+		model.addAttribute("assigneeTask", assigneeTask);
+
+		return "ReviewListPage";
+	}
+
+	// This is for calling ReviewProductDetailsPage for Accept And Reject
+
+	@RequestMapping(value = "/reviewProductDetails", method = RequestMethod.GET)
+	public String reviewProductDetails(ModelMap model,
+			HttpServletRequest request) throws Exception {
+		uName = getUser().getUsername();
+		
+		genericWorkFlowService.claimTaskByTaskId(request.getParameter("taskId"), uName);
+		
+		return "redirect:viewAirProductFlow?taskId="
+				+ request.getParameter("taskId") + "&roleType=reviewver";
+	}
+
+	// calling ViewPendingAppTaskPage for Approver
+
+	@RequestMapping(value = "/ViewTaskForApprove", method = RequestMethod.GET)
+	public String ViewTaskForApprove(ModelMap model, HttpServletRequest request)
+			throws Exception {
+		 uName = (String) getUser().getUsername();
+		String airManagerGroupName = "";
+		Collection<GrantedAuthority> tempGroup = getUser().getAuthorities();
+		for (GrantedAuthority ug : tempGroup)
+			airManagerGroupName = ug.getAuthority();
+		
+		
+		List<Task> groupTask = genericWorkFlowService.getTaskDetailsByGroup(airManagerGroupName);
+		model.addAttribute("groupTask", groupTask);
+		
+		
+		List<Task> task = genericWorkFlowService.getTaskDetailsByUser(uName);
+		model.addAttribute("task", task);
+
+		return "ViewPendingAppTaskPage";
+	}
+
+	// Manager can view the product details before approve
+
+	@RequestMapping(value = "/productDetailsForApprovel", method = RequestMethod.GET)
+	public String productDetailsForApprovel(ModelMap model,
+			HttpServletRequest request) throws Exception {
+		 uName = getUser().getUsername();
+		
+		
+		genericWorkFlowService.claimTaskByTaskId(request.getParameter("taskId"), uName);
+	
+		return "redirect:viewAirProductFlow?taskId="
+				+ request.getParameter("taskId") + "&roleType=approver";
+	}
+
+	// for Manager call a page to display all pending task list
+	@RequestMapping(value = "/ViewPendingTaskStatus", method = RequestMethod.GET)
+	public String ViewPendingTaskStatus(ModelMap model,
+			HttpServletRequest request) throws Exception {
+
+		
+		List<Task> task1 = genericWorkFlowService.getAllTaskDetails();
+		HashMap<String, String> tempMap = new HashMap<>();
+		for (Task t : task1) {
+			tempMap.put(t.getProcessInstanceId(), t.getDescription());
+		}
+		model.addAttribute("tempMap", tempMap);
+		return "ViewPendingTaskStatusReport";
+	}
+
+	@RequestMapping(value = "/ViewPendingTaskStatusReportDetails", method = RequestMethod.GET)
+	public String ViewPendingTaskStatusReportDetails(ModelMap model,
+			HttpServletRequest request) throws Exception {
+
+	
+		List<Task> task1 = genericWorkFlowService.getAllTaskDetails();
+		HashMap<String, String> tempMap = new HashMap<>();
+
+		for (Task t : task1) {
+			tempMap.put(t.getProcessInstanceId(), t.getDescription());
+		}
+		
+		List<HistoricTaskInstance> taskins = genericWorkFlowService.getAllTaskHistoyDetailsByProcessInstanceID(request.getParameter("taskId"));
+
+
+		model.addAttribute("taskins", taskins);
+		model.addAttribute("tempMap", tempMap);
+		model.addAttribute("pid", request.getParameter("taskId"));
+
+		return "ViewPendingTaskStatusReport";
+	}
+
+	// for release
+	@RequestMapping(value = "/releaseProductByManager", method = RequestMethod.GET)
+	public String releaseProductByManager(ModelMap model,
+			HttpServletRequest request) throws Exception {
+		
+		
+		genericWorkFlowService.deleteTaskByProcessInstance(request.getParameter("prId"), "Release Lock");
+		
+		return "redirect:welcome";
+	}
+
+	// this for Remarks Details
+	@RequestMapping(value = "/viewRemarks", method = RequestMethod.POST)
+	public @ResponseBody
+	String remarksView(
+			@RequestParam(value = "taskID", required = true) String taskID,
+			ModelMap model, HttpServletRequest request) throws Exception {
+
+		AirLineProductVO pojo = (AirLineProductVO) genericWorkFlowService
+				.getProductPojoIntoActivitiDatabse(taskID);
+
+		List<RemarkBean> relist = pojo.getRemarkList();
+		String rData = "<table><tr bgcolor='Lightblue'> <th><font align='center'><b>Remark By</b></font></th><th><font align='center'><b>Time</b></font></th><th><font align='center'><b>Text</b></font></th></tr>";
+
+		for (RemarkBean bb : relist) {
+			rData = rData + "<tr><td>" + bb.getBy() + "</td><td>"
+					+ bb.getRtimestamp() + "</td><td>" + bb.getText()
+					+ "</td></tr>";
+
+		}
+		rData = rData + "</table>";
+
+		return rData;
+	}
+
+	private User getUser() {
+		return (User) SecurityContextHolder.getContext().getAuthentication()
+				.getPrincipal();
+
+	}
+	@RequestMapping(value = "/GridTest", method = RequestMethod.GET)
+	public String gridTest(ModelMap model, HttpServletRequest request)
+			throws Exception {
+		return "GridTest";
+
+	}
+	
+	
+
+}
+
+===============================end================================
+
+	---------------------GenericWorkFlowService 
+
+package com.cnk.travelerpibe.workflow.service;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.activiti.engine.HistoryService;
+import org.activiti.engine.RepositoryService;
+import org.activiti.engine.RuntimeService;
+import org.activiti.engine.TaskService;
+import org.activiti.engine.history.HistoricTaskInstance;
+import org.activiti.engine.task.Task;
+import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.cnk.travelerpibe.product.air.services.IAirProductService;
+import com.cnk.travelerpibe.product.air.vo.AirLineProductVO;
+import com.cnk.travelerpibe.workflow.bean.RemarkBean;
+import com.cnk.travelerpibe.workflow.entities.HistoryProduct;
+import com.cnk.travelerpibe.workflow.entities.ProcessLocking;
+import com.cnk.travelerpibe.workflow.vo.WorkflowVO;
+import com.google.gson.Gson;
+
+@Service("genericWorkFlowService")
+public class GenericWorkFlowService {
+
+	@Autowired
+	RuntimeService runtimeService;
+
+	@Autowired
+	private TaskService taskService;
+
+	@Autowired
+	private HistoryService historyService;
+
+	@Autowired
+	private RepositoryService repositoryService;
+
+	@Autowired
+	private IProductService iProductService;
+
+	@Autowired
+	private IProcessLockingService processLockingService;
+
+	@Autowired
+	private IAirProductService iAirProductService;
+
+	private String pid;
+
+	public IAirProductService getiAirProductService() {
+		return iAirProductService;
+	}
+
+	public void setiAirProductService(IAirProductService iAirProductService) {
+		this.iAirProductService = iAirProductService;
+	}
+
+	public void startProductSetupWorkFlow(WorkflowVO productPojo,String buttonValue) {
+
+		try 
+		{
+
+			pid = runtimeService.startProcessInstanceByKey("TravelERPWorkflow1").getProcessInstanceId();
+
+			Task task = taskService.createTaskQuery().processInstanceId(pid).singleResult();
+			task.setAssignee(productPojo.getUserName());
+			task.setOwner(productPojo.getUserName());
+			task.setDescription(productPojo.getProductName());
+
+			// for Product Details
+
+			RemarkBean rbean = new RemarkBean();
+			rbean.setBy(productPojo.getUserName());
+			rbean.setRtimestamp(new Date().toString());
+			rbean.setText(productPojo.getRemarks());
+
+			productPojo.setProcessInstanceId(pid);
+			productPojo.setTaskId(task.getId());
+			productPojo.addRemark(rbean);
+			// productPojo.setCreatedBy(productPojo.getUserName());
+
+			HashMap<String, Object> hp = new HashMap<String, Object>();
+			hp.put("productDetails", productPojo);
+
+			List<String> ll = new ArrayList<String>();
+			ll.add("");
+			taskService.setVariable(task.getId(), "list1", ll);
+			taskService.setVariable(task.getId(), "discription1", "approve");
+			taskService.setVariable(task.getId(), "requestApprove", "approve");
+			taskService.setVariable(task.getId(), "productType",productPojo.getProductType());
+			saveProductPojoIntoActivitiDatabse(task.getId(), productPojo);
+
+			System.out.println("After setVariables() ============");
+			taskService.saveTask(task);
+
+			System.out.println("Before  		saveProcessLoking() ============");
+
+			// It Is For Edit for loking
+			if (getProductFromProcessLocking(productPojo.getProductId()) == false)
+				saveProcessLokingDetails(productPojo);
+			if (getProductFromProcessLocking(productPojo.getProductId()) == true)
+				processLockingService.updateLockingRecord(productPojo.getProductId(), 1, pid);
+
+			// setting for reviewer and manager user
+			setAssigneNameToReviewerAndManager(task.getId(),
+					productPojo.getProductType());
+
+			@SuppressWarnings("rawtypes")
+			Map map = getAssignAccessRols(productPojo.getProductType());
+			taskService.setVariable(task.getId(), "Access",	map.get("IS_QC_REQ"));
+
+			// for Task 2
+			if (buttonValue.equalsIgnoreCase("Submit")) {
+
+				taskService.complete(task.getId());
+				List<Task> task2 = taskService.createTaskQuery().processInstanceId(pid).list();
+
+				if ((task2.size()) == 1) {
+					task2.get(0).setOwner(productPojo.getUserName());
+					task2.get(0).setDescription(productPojo.getProductName());
+				}
+
+				taskService.saveTask(task2.get(0));
+			}
+
+		} catch (Exception er) {
+			System.out.println("Exception in Assigne Task " + er);
+		}
+
+	}
+
+	public void startExistingTaskFromcreator(String buttonValue, String taskID,	WorkflowVO productPojo) throws Exception
+	{
+
+		if (buttonValue.equalsIgnoreCase("Submit")) 
+		{
+
+			copyProduct(taskID, productPojo);
+
+			List<Task> task = taskService.createTaskQuery().processInstanceId(pid).list();
+
+			saveProductPojoIntoActivitiDatabse(taskID, productPojo);
+			List<String> ll = new ArrayList<String>();
+			ll.add("");
+			taskService.setVariable(taskID, "list1", ll);
+
+			taskService.setVariable(taskID, "discription1", "approve");
+			taskService.setVariable(taskID, "requestApprove", "approve");
+			taskService.setVariable(taskID, "productType",productPojo.getProductType());
+
+			System.out.println("Inside the SaveAndComplite block "+ productPojo.getProductType());
+
+			Task task2Deatils = taskService.createTaskQuery().taskId(taskID).singleResult();
+
+			String tOwner = task2Deatils.getOwner();
+			String tDesc = task2Deatils.getDescription();
+			String tName = task2Deatils.getName();
+
+			taskService.complete(taskID);
+
+			List<Task> task3Deatils = taskService.createTaskQuery().processInstanceId(pid).list();
+
+			for (Task tempTask : task3Deatils) {
+				tempTask.setOwner(tOwner);
+				tempTask.setDescription(tDesc);
+				taskService.saveTask(tempTask);
+			}
+
+		} 
+		else if (buttonValue.equalsIgnoreCase("Save")) 
+		{
+			System.out.println("Inside the save block");
+			copyProduct(taskID, productPojo);
+			saveProductPojoIntoActivitiDatabse(taskID, productPojo);
+		}
+	}
+
+	public void saveProductPojoIntoActivitiDatabse(String taskID,Object productPojo)
+	{
+		HashMap<String, Object> hp = new HashMap<String, Object>();
+		hp.put("productDetails", productPojo);
+		taskService.setVariable(taskID, "productDetails", hp);
+	}
+
+	private String getProceeInstanceID(String taskId) 
+	{
+		return taskService.createTaskQuery().taskId(taskId).singleResult().getProcessInstanceId();
+	}
+
+	private void copyProduct(String taskId, WorkflowVO productPojo)	throws Exception 
+	{
+		WorkflowVO pojo = (WorkflowVO) getProductPojoIntoActivitiDatabse(taskId);
+		productPojo.setRemarkList(pojo.getRemarkList());
+		addRemarks(productPojo);
+	}
+
+	private void addRemarks(WorkflowVO pojo) 
+	{
+		RemarkBean rbean = new RemarkBean();
+		rbean.setText(pojo.getRemarks());
+		rbean.setBy(pojo.getUserName());
+		rbean.setRtimestamp(new Date().toString());
+		pojo.addRemark(rbean);
+	}
+
+	public Object getProductPojoIntoActivitiDatabse(String taskID) 
+	{
+		HashMap<String, WorkflowVO> mapObj = (HashMap) taskService.getVariable(taskID, "productDetails");
+		return (WorkflowVO) mapObj.get("productDetails");
+	}
+
+	private boolean getProductFromProcessLocking(String prID) 
+	{
+		ProcessLocking pLocking = processLockingService.getLockingRecord(prID);
+		if (pLocking == null)
+			return false;
+		else
+			return true;
+	}
+
+	private void setAssigneNameToReviewerAndManager(String taskID,String productType) 
+	{
+		if (productType.equalsIgnoreCase("MANAGE_AIR") || productType.equalsIgnoreCase("MANAGE_CRUISE")) 
+		{
+			taskService.setVariable(taskID, "dManager", "airManager");
+			taskService.setVariable(taskID, "dReviewer", "airReviewer");
+		} 
+		else if (productType.equalsIgnoreCase("MANAGE_ACCO"))
+		{
+			taskService.setVariable(taskID, "dReviewer", "accomReviewer");
+			taskService.setVariable(taskID, "dManager", "accomManager");
+		} 
+		else
+		{
+			taskService.setVariable(taskID, "dReviewer", "hussy");
+			taskService.setVariable(taskID, "dManager", "james");
+		}
+	}
+
+	private Map getAssignAccessRols(String function)
+	{
+		List<Map> roleAccessDetails = iProductService.getAssignmentRoles(function);
+		System.out.println("Map Size is " + roleAccessDetails.size());
+		Map m1 = null;
+		for (Map m : roleAccessDetails) 
+		{
+			System.out.println("value is " + m.get("IS_CREATOR_REQ") + "  "	+ m.get("IS_QC_REQ") + "  " + m.get("IS_APPROVER_REQ"));
+			m1 = m;
+		}
+		return m1;
+	}
+
+	public void acceptProductByReviewer(String taskId, String gValue) 
+	{
+		String prid = getProceeInstanceID(taskId);
+		Task task3 = taskService.createTaskQuery().taskId(taskId).singleResult();
+		String tOwner = task3.getOwner();
+		String tDescription = task3.getDescription();
+		synchronized (this) 
+		{
+			if (gValue.equalsIgnoreCase("notapprove")) {
+				taskService.setVariable(taskId, "requestApprove", gValue);
+			}
+		}
+
+		// closing
+		taskService.complete(taskId);
+
+		String taskStatus = "";
+		List<Task> task4 = taskService.createTaskQuery().processInstanceId(prid).list();
+		for (Task tempTask : task4) 
+		{
+			tempTask.setOwner(tOwner);
+			tempTask.setDescription(tDescription);
+			if (tempTask.getAssignee() == null) {
+				taskStatus = "done";
+			}
+			taskService.saveTask(tempTask);
+		}
+
+		// for checking
+		if (taskStatus.equalsIgnoreCase("done"))
+		{
+			String sName = (String) taskService.getVariable(task4.get(0).getId(), "requestApprove");
+			System.out.println("in done valeu of xml is " + sName);
+
+			if (sName.equalsIgnoreCase("approve")) {
+				taskService.setVariable(task4.get(0).getId(), "discription1",tDescription);
+
+			} else if (sName.equalsIgnoreCase("notapprove")) {
+
+				List<HistoricTaskInstance> taskins = historyService
+						.createHistoricTaskInstanceQuery()
+						.processInstanceId(prid).list();
+				task4.get(0).setAssignee(taskins.get(0).getAssignee());
+
+			} else {
+				System.out.println("nothing........");
+			}
+			taskService.saveTask(task4.get(0));
+
+		}
+	}
+
+	public void callingAcceptProductByReviewerMethod(String buttonValue1,String taskId, WorkflowVO productPojo) throws Exception 
+	{
+		if (buttonValue1.equalsIgnoreCase("approve"))
+		{
+			@SuppressWarnings("unchecked")
+			List<String> remarks1 = (ArrayList<String>) taskService.getVariable(taskId, "list1");
+			remarks1.add(productPojo.getRemarks());
+			taskService.setVariable(taskId, "list1", remarks1);
+
+			copyProduct(taskId, productPojo);
+
+			saveProductPojoIntoActivitiDatabse(taskId, productPojo);
+
+			acceptProductByReviewer(taskId, buttonValue1);
+
+		}
+
+		if (buttonValue1.equalsIgnoreCase("notapprove")) 
+		{
+			@SuppressWarnings("unchecked")
+			List<String> remarks1 = (ArrayList<String>) taskService.getVariable(taskId, "list1");
+			remarks1.add(productPojo.getRemarks());
+			taskService.setVariable(taskId, "list1", remarks1);
+
+			copyProduct(taskId, productPojo);
+
+			saveProductPojoIntoActivitiDatabse(taskId, productPojo);
+
+			acceptProductByReviewer(taskId, buttonValue1);
+
+		}
+	}
+
+	// Approve product by Approver
+
+	public void approveProductByApprover(String btnValue, String taskId,WorkflowVO productPojo) throws Exception
+	{
+		if (btnValue.equalsIgnoreCase("APPROVE"))
+		{
+			taskService.setVariable(taskId, "requestApprove", "approve");
+
+			copyProduct(taskId, productPojo);
+
+			productPojo.setTaskId(taskId);
+			
+			// iProductService.saveProduct(productPojo);
+
+			if (productPojo instanceof AirLineProductVO) {
+
+				AirLineProductVO tempObj = (AirLineProductVO) productPojo;
+				iAirProductService.saveAirProductDetailsBean(tempObj);
+			}
+			
+			// for storing data in history table
+			System.out.println("Process Insatance ID is "+ productPojo.getProcessInstanceId());
+			
+			
+			 
+			//JSONObject jsontempob = new JSONObject(productPojo);
+			HistoryProduct hp = new HistoryProduct();
+			//hp.setContentData(jsontempob.toString());
+			
+			Gson gson = new Gson();
+			String json = gson.toJson(productPojo);
+			hp.setContentData(json);
+			
+			hp.setProcessId(productPojo.getProcessInstanceId());
+			hp.setProductId(productPojo.getProductId());
+			hp.setProductName(productPojo.getProductName());
+			hp.setProductType(productPojo.getProductType());
+			hp.setCreateTime(new Date());
+			iProductService.saveProductHistory(hp);
+			taskService.complete(taskId);
+
+		} 
+		else if (btnValue.equalsIgnoreCase("REJECT")) 
+		{
+			copyProduct(taskId, productPojo);
+			saveProductPojoIntoActivitiDatabse(taskId, productPojo);
+
+			Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
+			String ownerName = task.getOwner();
+			String taskDescription = task.getDescription();
+			String prid = taskService.createTaskQuery().taskId(taskId).singleResult().getProcessInstanceId();
+
+			taskService.setVariable(taskId, "requestApprove", "notapprove");
+			taskService.complete(taskId);
+
+			Task task4 = taskService.createTaskQuery().processInstanceId(prid).singleResult();
+			task4.setDescription(taskDescription);
+			task4.setOwner(ownerName);
+			prid = getProceeInstanceID(taskId);
+			List<HistoricTaskInstance> taskins = historyService.createHistoricTaskInstanceQuery().processInstanceId(prid).list();
+			task4.setAssignee(taskins.get(0).getAssignee());
+			taskService.saveTask(task4);
+
+		}
+		System.out.println("Task Complited....  and store in database...");
+
+		// for Loking purpose
+		processLockingService.updateLockingRecord(productPojo.getProductId(),0, productPojo.getProcessInstanceId());
+
+	}
+
+	public List<Task> getTaskDetailsByUser(String assigneName)
+	{
+		
+		return taskService.createTaskQuery().taskAssignee(assigneName).list();
+	}
+	
+	public List<Task> getTaskDetailsByGroup(String groupName)
+	{
+		
+		return taskService.createTaskQuery().taskCandidateGroup(groupName).list();
+	}
+	
+	public List<Task> getAllTaskDetails()
+	{
+		
+		return taskService.createTaskQuery().list();
+	}
+	
+	public List<HistoricTaskInstance> getAllTaskHistoyDetailsByProcessInstanceID(String processInstanceId)
+	{
+		
+		return historyService.createHistoricTaskInstanceQuery().processInstanceId(processInstanceId).list();
+	}
+	public List<Task> getTaskDetailsByPRID(String tempPrid)
+	{
+		return taskService.createTaskQuery().processInstanceId(tempPrid).list();
+		
+	}
+	public void deleteTaskByProcessInstance(String processInstanceId,String deleteReason)
+	{
+		runtimeService.deleteProcessInstance(processInstanceId,deleteReason);
+	}
+	
+	public void claimTaskByTaskId(String taskId,String userName)
+	{
+		taskService.claim(taskId, userName);
+	}
+	public void saveProcessLokingDetails(WorkflowVO productPojo) 
+	{
+		ProcessLocking pLocking = new ProcessLocking();
+		pLocking.setCreateTime(new Date());
+		pLocking.setProcessId(productPojo.getProcessInstanceId());
+		pLocking.setProductId(productPojo.getProductId());
+		pLocking.setProductName(productPojo.getProductName());
+		pLocking.setStatus(new Integer(0));
+		processLockingService.saveLockingRecord(pLocking);
+	}
+
+}
+
+
+
