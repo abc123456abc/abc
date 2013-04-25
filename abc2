@@ -1,1 +1,696 @@
 dd
+
+
+   -----------ProductPojo---------
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+@Entity
+@Table(name="product")
+public class ProductPojo implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@Column(name="PRODUCTID")
+	private String productId;
+	
+	@Column(name="PROCESS_INSTANCEID")
+	private String processInstanceID;
+	
+	@Column(name="PRODUCTNAME")
+	private String productName;
+	
+	@Column(name="PRODUCTTYPE")
+	private String productType;
+	
+	@Column(name="DESCRIPTION")
+	private String description;
+	
+	@Column(name="STATUS")
+	private String status;
+	
+	@Column(name="CREATEDBY")
+	private String createdBy;
+	
+	@Column(name="VALIDDATE")
+	private Date creationdate;
+
+	@Column(name="APPROVEBY")
+	private String approveBy;
+
+	@Column(name="REVIEWERREMARKS")
+	private String reviewerRemarks;
+
+	@Column(name="MANAGERREMARKS")
+	private String managerRemarks;
+
+	@Column(name="SUPPLIERNAME")
+	private String supplierName;
+
+	@Column(name="SUPPLIERADDRESS")
+	private String supplierAddress;
+	
+	@Column(name="SUPPLIERCOUNTRY")
+	private String supplierCountry;
+
+	@Column(name="PRODUCTSPECIFICCOUNTRY")
+	private String productSpecificCountry;
+
+	@Column(name="PRODUCTSUBCATAGRY")
+	private String productSubCatagry;
+	
+	@Column(name="PRODUCTCATAGRY")
+	private String productCatagry;
+	
+	@Column(name="REMARKS")
+	private String remarks;
+	
+
+	
+	
+	@Column(name="TASKID")
+	private String taskid;
+
+	
+	public String getProductId() {
+		return productId;
+	}
+
+	public void setProductId(String productId) {
+		this.productId = productId;
+	}
+
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
+	public String getProductType() {
+		return productType;
+	}
+
+	public void setProductType(String productType) {
+		this.productType = productType;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public Date getCreationdate() {
+		return creationdate;
+	}
+
+	public void setCreationdate(Date creationdate) {
+		this.creationdate = creationdate;
+	}
+
+	public String getApproveBy() {
+		return approveBy;
+	}
+
+	public void setApproveBy(String approveBy) {
+		this.approveBy = approveBy;
+	}
+
+	public String getTaskid() {
+		return taskid;
+	}
+
+	public void setTaskid(String taskid) {
+		this.taskid = taskid;
+	}
+
+	public String getReviewerRemarks() {
+		return reviewerRemarks;
+	}
+
+	public void setReviewerRemarks(String reviewerRemarks) {
+		this.reviewerRemarks = reviewerRemarks;
+	}
+
+	public String getManagerRemarks() {
+		return managerRemarks;
+	}
+
+	public void setManagerRemarks(String managerRemarks) {
+		this.managerRemarks = managerRemarks;
+	}
+
+	public String getSupplierName() {
+		return supplierName;
+	}
+
+	public void setSupplierName(String supplierName) {
+		this.supplierName = supplierName;
+	}
+
+	public String getSupplierAddress() {
+		return supplierAddress;
+	}
+
+	public void setSupplierAddress(String supplierAddress) {
+		this.supplierAddress = supplierAddress;
+	}
+
+	public String getSupplierCountry() {
+		return supplierCountry;
+	}
+
+	public void setSupplierCountry(String supplierCountry) {
+		this.supplierCountry = supplierCountry;
+	}
+
+	public String getProductSpecificCountry() {
+		return productSpecificCountry;
+	}
+
+	public void setProductSpecificCountry(String productSpecificCountry) {
+		this.productSpecificCountry = productSpecificCountry;
+	}
+
+	public String getProductSubCatagry() {
+		return productSubCatagry;
+	}
+
+	public void setProductSubCatagry(String productSubCatagry) {
+		this.productSubCatagry = productSubCatagry;
+	}
+
+	public String getProductCatagry() {
+		return productCatagry;
+	}
+
+	public void setProductCatagry(String productCatagry) {
+		this.productCatagry = productCatagry;
+	}
+
+	public String getProcessInstanceID() {
+		return processInstanceID;
+	}
+
+	public void setProcessInstanceID(String processInstanceID) {
+		this.processInstanceID = processInstanceID;
+	}
+
+	public String getRemarks() {
+		return remarks;
+	}
+
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
+	
+	
+	@Transient
+	private List<RemarkBean> remarkList = new ArrayList<RemarkBean>();
+
+
+	public List<RemarkBean> getRemarkList() {
+		return remarkList;
+	}
+
+	public void setRemarkList(List<RemarkBean> remarkList) {
+		this.remarkList = remarkList;
+	}
+	
+	public String retrieveRemarkJSONText() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("[");
+		String s="";
+		for(RemarkBean bean:remarkList){
+			sb.append(s);
+			sb.append(bean.toJSON());
+			s=",";
+		}
+		sb.append("]");
+		return sb.toString();
+	}
+	
+	public void addRemark(RemarkBean rbean) {
+		this.remarkList.add(rbean);
+	}
+
+	
+	
+}
+
+==================================End=======================
+
+	--------------HistoryProduct
+
+import java.io.Serializable;
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+/**
+ * @author sivaiah.polamreddy
+ *
+ */
+@Entity
+@Table(name="HISTORY_PRODUCT")
+public class HistoryProduct implements Serializable{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@Column(name="PROCESSID")
+	private String processId;
+	
+	@Column(name="PRODUCTTYPE")
+	private String productType;
+	
+	@Column(name="PRODUCTNAME")
+	private String productName;
+	
+	@Column(name="CONTENTDATA")
+	private String contentData;
+	
+	
+	@Column(name="PRODUCTID")
+	private String productId;
+	
+	@Column(name="CREATETIME")
+	private Date createTime;
+	
+	public String getProductId() {
+		return productId;
+	}
+
+	public void setProductId(String productId) {
+		this.productId = productId;
+	}
+
+	public String getProcessId() {
+		return processId;
+	}
+
+	public void setProcessId(String processId) {
+		this.processId = processId;
+	}
+
+	public String getProductType() {
+		return productType;
+	}
+
+	public void setProductType(String productType) {
+		this.productType = productType;
+	}
+
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
+	public String getContentData() {
+		return contentData;
+	}
+
+	public void setContentData(String contentData) {
+		this.contentData = contentData;
+	}
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	
+	
+
+}
+=============================End================================
+
+	-------------------ProcessLocking
+
+
+import java.io.Serializable;
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+/**
+ * @author sivaiah.polamreddy
+ * 
+ */
+@Entity
+@Table(name = "PROCESS_LOCKING")
+public class ProcessLocking implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@Column(name = "PRODUCTID")
+	private String productId;
+	
+	@Column(name = "PROCESSID")
+	private String processId;
+	
+	@Column(name = "PRODUCTNAME")
+	private String productName;
+	
+	@Column(name = "RECORDTIME")
+	private Date createTime;
+	
+	@Column(name = "STATUS")
+	private Integer status;
+
+	@Column(name = "CPROCESSID")
+	private String cProcessId;
+	
+	public String getProductId() {
+		return productId;
+	}
+
+	public void setProductId(String productId) {
+		this.productId = productId;
+	}
+
+	public String getProcessId() {
+		return processId;
+	}
+
+	public void setProcessId(String processId) {
+		this.processId = processId;
+	}
+
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+	public String getcProcessId() {
+		return cProcessId;
+	}
+
+	public void setcProcessId(String cProcessId) {
+		this.cProcessId = cProcessId;
+	}
+
+}
+// create table PROCESS_LOCKING(PRODUCTID VARCHAR2(32),PROCESSID VARCHAR2(32),PRODUCTNAME VARCHAR2(50),RECORDTIME DATE DEFAULT SYSDATE,STATUS number);
+===============================End===========================
+
+
+	------------------
+RemarkBean
+
+
+import java.io.Serializable;
+
+@SuppressWarnings("serial")
+public class RemarkBean implements Serializable {
+	String by;
+	String rtimestamp;
+	String text;
+	
+	
+	public String getBy() {
+		return by;
+	}
+
+
+	public void setBy(String by) {
+		this.by = by;
+	}
+
+
+	public String getRtimestamp() {
+		return rtimestamp;
+	}
+
+
+	public void setRtimestamp(String rtimestamp) {
+		this.rtimestamp = rtimestamp;
+	}
+
+
+	public String getText() {
+		return text;
+	}
+
+
+	public void setText(String text) {
+		this.text = text;
+	}
+
+
+	public String toJSON(){
+		return "{"+"by:"+"\""+by+"\","
+				+"timestamp:"+"\""+rtimestamp+"\","+"text:"+"\""+text+"\","+"}";
+	}
+}
+
+============================ End========================
+
+	---------------------CreateTaskBean
+
+
+public class CreateTaskBean {
+	
+	
+	private String productName;
+	private String assigneeTask;
+	private String remarks;
+	public String getProductName() {
+		return productName;
+	}
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+	public String getAssigneeTask() {
+		return assigneeTask;
+	}
+	public void setAssigneeTask(String assigneeTask) {
+		this.assigneeTask = assigneeTask;
+	}
+	public String getRemarks() {
+		return remarks;
+	}
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
+	
+	
+	
+
+}
+===================End==================
+
+
+	---TravelERPController
+
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.web.bind.annotation.SessionAttributes;
+
+//@SessionAttributes({ "username", "roleType" })
+public class TravelERPController {
+
+	public void putSession(String userName, String roleType, HttpSession session){
+		session.setAttribute("userName", userName);
+		session.setAttribute("roleType",roleType);
+	}
+
+}
+
+================================End===============
+
+	------------ in service -- WorkflowVO
+
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.stereotype.Component;
+
+import com.cnk.travelerpibe.workflow.bean.RemarkBean;
+
+@Component("workflowVO")
+public class WorkflowVO implements Serializable{
+
+	
+	private static final long serialVersionUID = -791332193019561580L;
+	private String taskId;
+	private String userName;
+	private String productId;
+	private String processInstanceId;
+	private String productType;
+	private String roleType;
+	private String remarks;
+	private String productName;
+	
+	
+	public String getTaskId() {
+		return taskId;
+	}
+
+	public void setTaskId(String taskId) {
+		this.taskId = taskId;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getProductId() {
+		return productId;
+	}
+
+	public void setProductId(String productId) {
+		this.productId = productId;
+	}
+
+	public String getProcessInstanceId() {
+		return processInstanceId;
+	}
+
+	public void setProcessInstanceId(String processInstanceId) {
+		this.processInstanceId = processInstanceId;
+	}
+
+	public String getProductType() {
+		return productType;
+	}
+
+	public void setProductType(String productType) {
+		this.productType = productType;
+	}
+
+	public String getRoleType() {
+		return roleType;
+	}
+
+	public void setRoleType(String roleType) {
+		this.roleType = roleType;
+	}
+
+	public String getRemarks() {
+		return remarks;
+	}
+
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
+
+	public String getProductName() {
+		
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName =productName;
+	}
+	private List<RemarkBean> remarkList = new ArrayList<RemarkBean>();
+
+
+	public List<RemarkBean> getRemarkList() {
+		return remarkList;
+	}
+
+	public void setRemarkList(List<RemarkBean> remarkList) {
+		this.remarkList = remarkList;
+	}
+	
+	
+
+	public String retrieveRemarkJSONText() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("[");
+		String s="";
+		for(RemarkBean bean:remarkList){
+			sb.append(s);
+			sb.append(bean.toJSON());
+			s=",";
+		}
+		sb.append("]");
+		return sb.toString();
+	}
+	
+	public void addRemark(RemarkBean rbean) {
+		this.remarkList.add(rbean);
+	}
+	
+}
+
+=========================== End================
+
+
