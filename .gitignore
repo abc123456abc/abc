@@ -1,1 +1,1439 @@
 aaa
+--------------------------------------------------------
+--  File created - Monday-April-22-2013   
+--------------------------------------------------------
+--------------------------------------------------------
+--  DDL for Table ACT_ID_USER
+--------------------------------------------------------
+
+  CREATE TABLE "SANDEEP_AIR"."ACT_ID_USER" 
+   (  "ID_" NVARCHAR2(64), 
+	"REV_" NUMBER(*,0), 
+	"FIRST_" NVARCHAR2(255), 
+	"LAST_" NVARCHAR2(255), 
+	"EMAIL_" NVARCHAR2(255), 
+	"PWD_" NVARCHAR2(255), 
+	"PICTURE_ID_" NVARCHAR2(64)
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Table ACT_ID_MEMBERSHIP
+--------------------------------------------------------
+
+  CREATE TABLE "SANDEEP_AIR"."ACT_ID_MEMBERSHIP" 
+   (	"USER_ID_" NVARCHAR2(64), 
+	"GROUP_ID_" NVARCHAR2(64)
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Table ACT_ID_GROUP
+--------------------------------------------------------
+
+  CREATE TABLE "SANDEEP_AIR"."ACT_ID_GROUP" 
+   (	"ID_" NVARCHAR2(64), 
+	"REV_" NUMBER(*,0), 
+	"NAME_" NVARCHAR2(255), 
+	"TYPE_" NVARCHAR2(255)
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Table ASSIGNMENT
+--------------------------------------------------------
+
+  CREATE TABLE "SANDEEP_AIR"."ASSIGNMENT" 
+   (	"FUNCTION_" VARCHAR2(50 BYTE), 
+	"IS_CREATOR_REQ" CHAR(1 BYTE), 
+	"IS_QC_REQ" CHAR(1 BYTE), 
+	"IS_APPROVER_REQ" CHAR(1 BYTE)
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Table HISTORY_PRODUCT
+--------------------------------------------------------
+
+  CREATE TABLE "SANDEEP_AIR"."HISTORY_PRODUCT" 
+   (	"PROCESSID" VARCHAR2(255 CHAR), 
+	"CREATETIME" TIMESTAMP (6), 
+	"PRODUCTID" VARCHAR2(255 CHAR), 
+	"PRODUCTNAME" VARCHAR2(255 CHAR), 
+	"PRODUCTTYPE" VARCHAR2(255 CHAR), 
+	"CONTENTDATA" CLOB
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" 
+ LOB ("CONTENTDATA") STORE AS BASICFILE (
+  TABLESPACE "SYSTEM" ENABLE STORAGE IN ROW CHUNK 8192 RETENTION 
+  NOCACHE LOGGING 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)) ;
+--------------------------------------------------------
+--  DDL for Table PROCESS_LOCKING
+--------------------------------------------------------
+
+  CREATE TABLE "SANDEEP_AIR"."PROCESS_LOCKING" 
+   (	"PRODUCTID" VARCHAR2(255 CHAR), 
+	"CPROCESSID" VARCHAR2(255 CHAR), 
+	"RECORDTIME" TIMESTAMP (6), 
+	"PROCESSID" VARCHAR2(255 CHAR), 
+	"PRODUCTNAME" VARCHAR2(255 CHAR), 
+	"STATUS" NUMBER(10,0)
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+REM INSERTING into SANDEEP_AIR.ACT_ID_USER
+SET DEFINE OFF;
+Insert into SANDEEP_AIR.ACT_ID_USER (ID_,REV_,FIRST_,LAST_,EMAIL_,PWD_,PICTURE_ID_) values ('lucy',1,'Lucy','Maya','lucy@localhost','lucy',null);
+Insert into SANDEEP_AIR.ACT_ID_USER (ID_,REV_,FIRST_,LAST_,EMAIL_,PWD_,PICTURE_ID_) values ('watson',1,'Watson','Hall','watson@localhost','watson',null);
+Insert into SANDEEP_AIR.ACT_ID_USER (ID_,REV_,FIRST_,LAST_,EMAIL_,PWD_,PICTURE_ID_) values ('robert',1,'Robert','King','robert@localhost','robert',null);
+Insert into SANDEEP_AIR.ACT_ID_USER (ID_,REV_,FIRST_,LAST_,EMAIL_,PWD_,PICTURE_ID_) values ('franklin',1,'Franklin','Franklin','franklin@localhost','franklin',null);
+Insert into SANDEEP_AIR.ACT_ID_USER (ID_,REV_,FIRST_,LAST_,EMAIL_,PWD_,PICTURE_ID_) values ('williams',1,'Williams','Williams','williams@localhost','williams',null);
+Insert into SANDEEP_AIR.ACT_ID_USER (ID_,REV_,FIRST_,LAST_,EMAIL_,PWD_,PICTURE_ID_) values ('hussy',1,'Hussy','Mikhal','hussy@localhost','hussy',null);
+Insert into SANDEEP_AIR.ACT_ID_USER (ID_,REV_,FIRST_,LAST_,EMAIL_,PWD_,PICTURE_ID_) values ('james',1,'James','Harath','james@localhost','james',null);
+Insert into SANDEEP_AIR.ACT_ID_USER (ID_,REV_,FIRST_,LAST_,EMAIL_,PWD_,PICTURE_ID_) values ('devid',1,'Devid','Andole','devid@localhost','devid',null);
+Insert into SANDEEP_AIR.ACT_ID_USER (ID_,REV_,FIRST_,LAST_,EMAIL_,PWD_,PICTURE_ID_) values ('john',1,'John','Milton','john@localhost','john',null);
+Insert into SANDEEP_AIR.ACT_ID_USER (ID_,REV_,FIRST_,LAST_,EMAIL_,PWD_,PICTURE_ID_) values ('peterson',1,'Peterson','Peterson','peterson@localhost','peterson',null);
+Insert into SANDEEP_AIR.ACT_ID_USER (ID_,REV_,FIRST_,LAST_,EMAIL_,PWD_,PICTURE_ID_) values ('gayle',1,'Gayle','Gayle','gayle@localhost','gayle',null);
+Insert into SANDEEP_AIR.ACT_ID_USER (ID_,REV_,FIRST_,LAST_,EMAIL_,PWD_,PICTURE_ID_) values ('wade',1,'Wade','Wade','wade@localhost','wade',null);
+Insert into SANDEEP_AIR.ACT_ID_USER (ID_,REV_,FIRST_,LAST_,EMAIL_,PWD_,PICTURE_ID_) values ('smith',1,'Smith','Smith','smith@localhost','smith',null);
+Insert into SANDEEP_AIR.ACT_ID_USER (ID_,REV_,FIRST_,LAST_,EMAIL_,PWD_,PICTURE_ID_) values ('sachin',1,'Sachin','sachin','sachin@localhost','sachin',null);
+Insert into SANDEEP_AIR.ACT_ID_USER (ID_,REV_,FIRST_,LAST_,EMAIL_,PWD_,PICTURE_ID_) values ('andrew',1,'Andrew','Andrew','andrew@localhost','andrew',null);
+Insert into SANDEEP_AIR.ACT_ID_USER (ID_,REV_,FIRST_,LAST_,EMAIL_,PWD_,PICTURE_ID_) values ('rahul',1,'Rahul','Rahul','rahul@localhost','rahul',null);
+Insert into SANDEEP_AIR.ACT_ID_USER (ID_,REV_,FIRST_,LAST_,EMAIL_,PWD_,PICTURE_ID_) values ('bell',11,'Bell','Bell','bell@localhost','bell',null);
+REM INSERTING into SANDEEP_AIR.ACT_ID_MEMBERSHIP
+SET DEFINE OFF;
+Insert into SANDEEP_AIR.ACT_ID_MEMBERSHIP (USER_ID_,GROUP_ID_) values ('andrew','accomReviewer');
+Insert into SANDEEP_AIR.ACT_ID_MEMBERSHIP (USER_ID_,GROUP_ID_) values ('bell','airManager');
+Insert into SANDEEP_AIR.ACT_ID_MEMBERSHIP (USER_ID_,GROUP_ID_) values ('devid','admin');
+Insert into SANDEEP_AIR.ACT_ID_MEMBERSHIP (USER_ID_,GROUP_ID_) values ('devid','manager');
+Insert into SANDEEP_AIR.ACT_ID_MEMBERSHIP (USER_ID_,GROUP_ID_) values ('franklin','reviewer');
+Insert into SANDEEP_AIR.ACT_ID_MEMBERSHIP (USER_ID_,GROUP_ID_) values ('gayle','airReviewer');
+Insert into SANDEEP_AIR.ACT_ID_MEMBERSHIP (USER_ID_,GROUP_ID_) values ('hussy','reviewer');
+Insert into SANDEEP_AIR.ACT_ID_MEMBERSHIP (USER_ID_,GROUP_ID_) values ('james','admin');
+Insert into SANDEEP_AIR.ACT_ID_MEMBERSHIP (USER_ID_,GROUP_ID_) values ('james','manager');
+Insert into SANDEEP_AIR.ACT_ID_MEMBERSHIP (USER_ID_,GROUP_ID_) values ('john','admin');
+Insert into SANDEEP_AIR.ACT_ID_MEMBERSHIP (USER_ID_,GROUP_ID_) values ('john','manager');
+Insert into SANDEEP_AIR.ACT_ID_MEMBERSHIP (USER_ID_,GROUP_ID_) values ('lucy','configurator');
+Insert into SANDEEP_AIR.ACT_ID_MEMBERSHIP (USER_ID_,GROUP_ID_) values ('peterson','accomReviewer');
+Insert into SANDEEP_AIR.ACT_ID_MEMBERSHIP (USER_ID_,GROUP_ID_) values ('rahul','accomManager');
+Insert into SANDEEP_AIR.ACT_ID_MEMBERSHIP (USER_ID_,GROUP_ID_) values ('robert','configurator');
+Insert into SANDEEP_AIR.ACT_ID_MEMBERSHIP (USER_ID_,GROUP_ID_) values ('sachin','airReviewer');
+Insert into SANDEEP_AIR.ACT_ID_MEMBERSHIP (USER_ID_,GROUP_ID_) values ('smith','airManager');
+Insert into SANDEEP_AIR.ACT_ID_MEMBERSHIP (USER_ID_,GROUP_ID_) values ('wade','accomManager');
+Insert into SANDEEP_AIR.ACT_ID_MEMBERSHIP (USER_ID_,GROUP_ID_) values ('watson','configurator');
+Insert into SANDEEP_AIR.ACT_ID_MEMBERSHIP (USER_ID_,GROUP_ID_) values ('williams','reviewer');
+REM INSERTING into SANDEEP_AIR.ACT_ID_GROUP
+SET DEFINE OFF;
+Insert into SANDEEP_AIR.ACT_ID_GROUP (ID_,REV_,NAME_,TYPE_) values ('configurator',4,'configurator','assignment');
+Insert into SANDEEP_AIR.ACT_ID_GROUP (ID_,REV_,NAME_,TYPE_) values ('reviewer',4,'reviewer','security-role');
+Insert into SANDEEP_AIR.ACT_ID_GROUP (ID_,REV_,NAME_,TYPE_) values ('admin',4,'system adminstrator','security-role');
+Insert into SANDEEP_AIR.ACT_ID_GROUP (ID_,REV_,NAME_,TYPE_) values ('manager',4,'manager','security-role');
+Insert into SANDEEP_AIR.ACT_ID_GROUP (ID_,REV_,NAME_,TYPE_) values ('accomReviewer',4,'AccomReviewer','security-role');
+Insert into SANDEEP_AIR.ACT_ID_GROUP (ID_,REV_,NAME_,TYPE_) values ('airReviewer',4,'AirReviewer','security-role');
+Insert into SANDEEP_AIR.ACT_ID_GROUP (ID_,REV_,NAME_,TYPE_) values ('accomManager',4,'AccomManager','security-role');
+Insert into SANDEEP_AIR.ACT_ID_GROUP (ID_,REV_,NAME_,TYPE_) values ('airManager',4,'AirManager','security-role');
+REM INSERTING into SANDEEP_AIR.ASSIGNMENT
+SET DEFINE OFF;
+Insert into SANDEEP_AIR.ASSIGNMENT (FUNCTION_,IS_CREATOR_REQ,IS_QC_REQ,IS_APPROVER_REQ) values ('MANAGE_AIR','Y','Y','Y');
+Insert into SANDEEP_AIR.ASSIGNMENT (FUNCTION_,IS_CREATOR_REQ,IS_QC_REQ,IS_APPROVER_REQ) values ('MANAGE_ACCO','Y','N','Y');
+Insert into SANDEEP_AIR.ASSIGNMENT (FUNCTION_,IS_CREATOR_REQ,IS_QC_REQ,IS_APPROVER_REQ) values ('MANAGE_CRUISE','Y','N','Y');
+REM INSERTING into SANDEEP_AIR.HISTORY_PRODUCT
+SET DEFINE OFF;
+
+
+=========================================End========================
+
+	My Controller----------------WorkFlowActivitiControllerNew 
+
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+
+import org.activiti.engine.HistoryService;
+import org.activiti.engine.IdentityService;
+import org.activiti.engine.RepositoryService;
+import org.activiti.engine.RuntimeService;
+import org.activiti.engine.TaskService;
+import org.activiti.engine.history.HistoricTaskInstance;
+import org.activiti.engine.task.Task;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.node.ObjectNode;
+import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.cnk.workflow.entities.HistoryProduct;
+import com.cnk.workflow.entities.ProcessLocking;
+import com.cnk.workflow.entities.ProductPojo;
+import com.cnk.workflow.entities.RemarkBean;
+import com.cnk.workflow.service.IProcessLockingService;
+import com.cnk.workflow.service.IProductService;
+
+@Controller
+public class WorkFlowActivitiControllerNew {
+
+	@Autowired
+	RuntimeService runtimeService;
+
+	@Autowired
+	TaskService taskService;
+
+	@Autowired
+	HistoryService historyService;
+
+	@Autowired
+	RepositoryService repositoryService;
+
+	@Autowired
+	IProductService iProductService;
+
+	@Autowired
+	IProcessLockingService processLockingService;
+
+	@Autowired
+	IdentityService identityService;
+
+	String pid;
+
+	
+	// for Manager call a page to display all pending task list
+	@RequestMapping(value = "/ViewPendingTaskStatus", method = RequestMethod.GET)
+	public String ViewPendingTaskStatus(ModelMap model,
+			HttpServletRequest request) throws Exception {
+
+		List<Task> task1 = taskService.createTaskQuery().list();
+
+		HashMap<String, String> tempMap = new HashMap<>();
+
+		for (Task t : task1) {
+			tempMap.put(t.getProcessInstanceId(), t.getDescription());
+			System.out.println("" + t.getProcessInstanceId() + "  DS "
+					+ t.getDescription());
+		}
+
+		System.out.println("From HashSet In ArrayList Task Size is "
+				+ tempMap.size());
+		System.out.println(tempMap);
+
+		model.addAttribute("tempMap", tempMap);
+
+		return "ViewPendingTaskStatusReport";
+	}
+
+	@RequestMapping(value = "/ViewPendingTaskStatusReportDetails", method = RequestMethod.GET)
+	public String ViewPendingTaskStatusReportDetails(ModelMap model,
+			HttpServletRequest request) throws Exception {
+
+		List<Task> task1 = taskService.createTaskQuery().list();
+		HashMap<String, String> tempMap = new HashMap<>();
+
+		for (Task t : task1) {
+			tempMap.put(t.getProcessInstanceId(), t.getDescription());
+
+		}
+
+		List<HistoricTaskInstance> taskins = historyService
+				.createHistoricTaskInstanceQuery()
+				.processInstanceId(request.getParameter("taskId")).list();
+
+		for (HistoricTaskInstance ins : taskins) {
+			System.out.println("assign name is" + ins.getAssignee() + " TN "
+					+ ins.getName() + "  ID " + ins.getId()
+					+ ins.getDeleteReason());
+		}
+
+		model.addAttribute("taskins", taskins);
+		model.addAttribute("tempMap", tempMap);
+		model.addAttribute("pid", request.getParameter("taskId"));
+
+		return "ViewPendingTaskStatusReport";
+	}
+
+	// calling ViewPendingAppTaskPage
+
+	@RequestMapping(value = "/ViewTaskForApprove", method = RequestMethod.GET)
+	public String ViewTaskForApprove(ModelMap model, HttpServletRequest request)
+			throws Exception {
+
+		User user = getUser();
+		String name = (String) user.getUsername();
+
+		// base on Group
+		// This is based on Group Name
+		String airManagerGroupName = "";
+		Collection<GrantedAuthority> tempGroup = user.getAuthorities();
+		for (GrantedAuthority ug : tempGroup)
+			airManagerGroupName = ug.getAuthority();
+
+		List<Task> groupTask = taskService.createTaskQuery()
+				.taskCandidateGroup(airManagerGroupName).list();
+		System.out.println("In Manager Page Call : " + groupTask.size()
+				+ " Task Name " + airManagerGroupName);
+		model.addAttribute("groupTask", groupTask);
+
+		List<Task> task = taskService.createTaskQuery().taskAssignee(name)
+				.list();
+
+		model.addAttribute("task", task);
+
+		return "ViewPendingAppTaskPage";
+	}
+
+	// View List of Task for Admin
+	@RequestMapping(value = "/ViewTaskCreate", method = RequestMethod.GET)
+	public String ViewTaskCreate(ModelMap model, HttpServletRequest request)
+			throws Exception {
+
+		User user = getUser();
+		String name = (String) user.getUsername();
+
+		List<Task> task = taskService.createTaskQuery().taskAssignee(name)
+				.list();
+
+		model.addAttribute("task", task);
+
+		return "ViewTaskForCreate";
+	}
+
+	// code for ReviePage Call
+
+	@RequestMapping(value = "/reviewPageCall", method = RequestMethod.GET)
+	public String reviewPageCall(ModelMap model, HttpServletRequest request)
+			throws Exception {
+
+		User user = getUser();
+		String name = (String) user.getUsername();
+
+		// This is based on assigne name
+		List<Task> assigneeTask = taskService.createTaskQuery()
+				.taskAssignee(name).list();
+
+		// This is based on Group Name
+		String airReviewerGroupName = "";
+		Collection<GrantedAuthority> tempGroup = user.getAuthorities();
+		for (GrantedAuthority ug : tempGroup)
+			airReviewerGroupName = ug.getAuthority();
+
+		List<Task> task = taskService.createTaskQuery()
+				.taskCandidateGroup(airReviewerGroupName).list();
+		System.out.println("In Review Pahge Call : " + task.size()
+				+ " Task Name " + airReviewerGroupName);
+		model.addAttribute("task", task);
+		model.addAttribute("assigneeTask", assigneeTask);
+
+		return "ReviewListPage";
+	}
+
+	// Review Pending Task base on Group
+
+	@RequestMapping(value = "/ListOfPendingTaskForReviewPageCall", method = RequestMethod.GET)
+	public String ListOfPendingTaskForReviewPageCall(ModelMap model) {
+
+		// User user=getUser();
+		// This is based on Group Name
+		String groupName = "";
+		Collection<GrantedAuthority> tempGroup = getUser().getAuthorities();
+		for (GrantedAuthority ug : tempGroup)
+			groupName = ug.getAuthority();
+
+		List<Task> task = taskService.createTaskQuery()
+				.taskCandidateGroup(groupName).list();
+		System.out.println("In Review Pahge Call : " + task.size()
+				+ " Task Name " + groupName);
+		model.addAttribute("task", task);
+
+		return "ListOfPendingTaskForReview";
+	}
+
+	// Reviewer Going to Claim Task
+	@RequestMapping(value = "/claimTaskToUser", method = RequestMethod.GET)
+	public String claimTaskToReviewer(ModelMap model, HttpServletRequest request)
+			throws Exception {
+
+		String userNameTemp = getUser().getUsername();
+		taskService.claim(request.getParameter("taskId"), userNameTemp);
+
+		return "redirect:welcome";
+		// return "redirect:reviewProductDetails";
+	}
+
+	// Task task;
+
+	// Manager can view the product details before approve
+
+	@RequestMapping(value = "/productDetailsForApprovel", method = RequestMethod.GET)
+	public String productDetailsForApprovel(ModelMap model,
+			HttpServletRequest request) throws Exception {
+
+		// ProductPojo pojo = (ProductPojo)
+		// taskService.getVariable(request.getParameter("taskId"),
+		// "productDetails");
+
+		String userNameTemp = getUser().getUsername();
+		taskService.claim(request.getParameter("taskId"), userNameTemp);
+
+		ProductPojo pojo = (ProductPojo) getProductPojoIntoActivitiDatabse(request
+				.getParameter("taskId"));
+
+		List<String> remarks1 = (ArrayList<String>) taskService.getVariable(
+				request.getParameter("taskId"), "list1");
+		StringBuilder sb = new StringBuilder();
+		for (String rem : remarks1)
+			sb.append(rem);
+
+		String stringRemarks = sb.toString();
+
+		ProductPojo oldValue = iProductService.getProductDetails(pojo
+				.getProductId());
+		if (oldValue != null)
+			model.addAttribute("oldValue", oldValue);
+
+		model.addAttribute("remarks1", stringRemarks.replace('+', ' '));
+		model.addAttribute("productPojo", pojo);
+		model.addAttribute("taskid", request.getParameter("taskId"));
+
+		System.out.println("Calling ProductCreationPage for Task Id : -- "
+				+ request.getParameter("taskId"));
+
+		return "ProductDetailsForApprovel";
+	}
+
+	// This is for Complite The Task through Manager
+	@RequestMapping(value = "/approveProduct", method = RequestMethod.POST)
+	public String approveProduct(
+			@ModelAttribute("productPojo") ProductPojo productPojo,
+			ModelMap model, HttpServletRequest request) throws Exception {
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String name = (String) user.getUsername();
+
+		/* String name=request.getRemoteUser(); */
+		System.out.println("In Approvel Method  Product nam eis "
+				+ productPojo.getProductName());
+		System.out.println("In Approvel  " + request.getParameter("taskId"));
+
+		// for remarks
+
+		// taskService.claim(request.getParameter("taskId"), name);
+		String returnValue = "redirect:welcome";
+		// String returnValue="manager_home";
+		if (request.getParameter("button1").equalsIgnoreCase("CANCEL")) {
+
+			returnValue = "redirect:ViewTaskForApprove";
+		} else if (request.getParameter("button1").equalsIgnoreCase("APPROVE")) {
+
+			taskService.setVariable(request.getParameter("taskId"),
+					"requestApprove", "approve");
+
+			copyProduct(request.getParameter("taskId"), productPojo);
+
+			productPojo.setStatus("CONFIRM");
+			productPojo.setTaskid(request.getParameter("taskId"));
+			productPojo.setApproveBy("james");
+			productPojo.setReviewerRemarks(productPojo.getRemarks().trim());
+			iProductService.saveProduct(productPojo);
+
+			// for storing data in history table
+			System.out.println("Process Insatance ID is "
+					+ productPojo.getProcessInstanceID());
+
+			JSONObject jsontempob = new JSONObject(productPojo);
+			HistoryProduct hp = new HistoryProduct();
+			hp.setContentData(jsontempob.toString());
+			hp.setProcessId(productPojo.getProcessInstanceID());
+			hp.setProductId(productPojo.getProductId());
+			hp.setProductName(productPojo.getProductName());
+			hp.setProductType(productPojo.getProductType());
+			hp.setCreateTime(new Date());
+			iProductService.saveProductHistory(hp);
+
+			// ActivitiRestClient.completeRequestTask(request.getParameter("taskId"));
+
+			taskService.complete(request.getParameter("taskId"));
+
+		} else if (request.getParameter("button1").equalsIgnoreCase("REJECT")) {
+
+			copyProduct(request.getParameter("taskId"), productPojo);
+			saveProductPojoIntoActivitiDatabse(request.getParameter("taskId"),
+					productPojo);
+
+			Task task = taskService.createTaskQuery()
+					.taskId(request.getParameter("taskId")).singleResult();
+			String ownerName = task.getOwner();
+			String taskDescription = task.getDescription();
+			String prid = taskService.createTaskQuery()
+					.taskId(request.getParameter("taskId")).singleResult()
+					.getProcessInstanceId();
+
+			taskService.setVariable(request.getParameter("taskId"),
+					"requestApprove", "notapprove");
+			taskService.complete(request.getParameter("taskId"));
+
+			Task task4 = taskService.createTaskQuery().processInstanceId(prid)
+					.singleResult();
+			task4.setDescription(taskDescription);
+			task4.setOwner(ownerName);
+
+			List<HistoricTaskInstance> taskins = historyService
+					.createHistoricTaskInstanceQuery().processInstanceId(prid)
+					.list();
+			task4.setAssignee(taskins.get(0).getAssignee());
+			taskService.saveTask(task4);
+
+		}
+		System.out.println("Task Complited....  and store in database...");
+
+		List<ProductPojo> productList = iProductService.productList();
+		System.out.println(productList.size());
+
+		// for Loking purpose
+		processLockingService.updateLockingRecord(productPojo.getProductId(),
+				0, productPojo.getProcessInstanceID());
+
+		model.addAttribute("productList", productList);
+
+		return returnValue;
+	}
+
+	// This is for calling ProductCreation Page means when u click on  createproduct link at the time this method invoked
+
+	@RequestMapping(value = "/craeteProduct", method = RequestMethod.GET)
+	public String productCreatePageCall(ModelMap model,
+			HttpServletRequest request) throws Exception {
+
+		System.out.println("Task Id is in craeteProduct "
+				+ request.getParameter("taskId"));
+		ProductPojo pojo = (ProductPojo) getProductPojoIntoActivitiDatabse(request
+				.getParameter("taskId"));
+
+		/*ProductPojo oldValue = iProductService.getProductDetails(pojo
+				.getProductId());
+		if (oldValue != null) {
+			model.addAttribute("readonly", "readonly");
+			model.addAttribute("oldValue", oldValue);
+		}*/
+		// addRemarks(pojo);
+		/*List<RemarkBean> relist = pojo.getRemarkList();
+
+		for (RemarkBean bb : relist)
+			System.out.println("Remarks:----" + bb.getBy());
+*/
+		model.addAttribute("productPojo", pojo);
+
+		model.addAttribute("taskid", request.getParameter("taskId"));
+		
+		//return "ProductCreation";
+		//return "ProuctCreatePage";
+		
+		
+		////====
+		
+		String productType=pojo.getProductType();
+		String pageType="";
+		
+		if(productType.equalsIgnoreCase("MANAGE_AIR"))
+		{
+			pageType="CreateAir";
+		}
+		else if(productType.equalsIgnoreCase("MANAGE_ACCO"))
+		{
+			pageType="CreateAccomodation";
+		}
+		return pageType;
+		
+	}
+
+	// This is with restapi
+
+	@RequestMapping(value = "/productCreateStart", method = RequestMethod.POST)
+	public String productCreateStart(
+			@ModelAttribute("productPojo") ProductPojo productPojo,
+			ModelMap model, HttpServletRequest request) throws Exception {
+
+		User user = getUser();
+		String username = (String) user.getUsername();
+
+		String taskID=request.getParameter("taskId");
+		
+		System.out.println("Task ID is "+taskID);
+		
+		if(request.getParameter("button1").equalsIgnoreCase("CANCEL"))
+		{
+			return "redirect:welcome";
+		}
+		else
+		{
+			if(taskID.equals("null")) // for new Task
+			{
+				startProductSetupWorkFlow(username, productPojo,request.getParameter("button1"));
+			}
+			else // for existing task means save task
+			{
+				startExistingTaskFromcreator(request.getParameter("button1"),taskID,productPojo);
+			}
+		}
+
+		return "redirect:welcome";
+	}
+
+	private void startExistingTaskFromcreator(String buttonValue,String taskID,ProductPojo productPojo ) throws Exception
+	{
+		//String buttonValue = request.getParameter("button1");
+
+		if (buttonValue.equalsIgnoreCase("Submit")) {
+
+			copyProduct(taskID, productPojo);
+
+			List<Task> task = taskService.createTaskQuery()
+					.processInstanceId(pid).list();
+
+			saveProductPojoIntoActivitiDatabse(taskID,productPojo);
+
+		
+
+			List<String> ll = new ArrayList<String>();
+			ll.add("");
+			taskService.setVariable(taskID, "list1", ll);
+
+			taskService.setVariable(taskID,	"discription1", "approve");
+			taskService.setVariable(taskID,	"requestApprove", "approve");
+			taskService.setVariable(taskID, "productType",productPojo.getProductType());
+			
+			System.out.println("Inside the SaveAndComplite block "+productPojo.getProductType());
+			
+			Task task2Deatils = taskService.createTaskQuery().taskId(taskID).singleResult();
+
+			String tOwner = task2Deatils.getOwner();
+			String tDesc = task2Deatils.getDescription();
+			String tName = task2Deatils.getName();
+
+			taskService.complete(taskID);
+
+			List<Task> task3Deatils = taskService.createTaskQuery()
+					.processInstanceId(pid).list();
+
+			for (Task tempTask : task3Deatils) {
+				tempTask.setOwner(tOwner);
+				tempTask.setDescription(tDesc);
+				taskService.saveTask(tempTask);
+			}
+
+			
+
+		} else if (buttonValue.equalsIgnoreCase("Save")) {
+
+			System.out.println("Inside the save block");
+			copyProduct(taskID, productPojo);
+
+			
+			saveProductPojoIntoActivitiDatabse(taskID,	productPojo);
+
+		}
+	}
+
+	
+	// This is for calling ReviewProductDetailsPage for Accept And Reject
+
+	@RequestMapping(value = "/reviewProductDetails", method = RequestMethod.GET)
+	public String reviewProductDetails(ModelMap model,
+			HttpServletRequest request) throws Exception {
+
+		System.out.println("It Is inside Review Product Details Method ");
+
+		String userNameTemp = getUser().getUsername();
+		taskService.claim(request.getParameter("taskId"), userNameTemp);
+
+		ProductPojo pojo = (ProductPojo) getProductPojoIntoActivitiDatabse(request
+				.getParameter("taskId"));
+
+		ProductPojo oldValue = iProductService.getProductDetails(pojo
+				.getProductId());
+
+		if (oldValue != null)
+			model.addAttribute("oldValue", oldValue);
+
+		model.addAttribute("productPojo", pojo);
+		model.addAttribute("taskid", request.getParameter("taskId"));
+
+		return "ReviewProductDetails";
+	}
+
+	// This calling for Accept Page
+
+	
+	@RequestMapping(value = "/acceptProduct", method = RequestMethod.POST)
+	public String acceptProduct(
+			@ModelAttribute("productPojo") ProductPojo productPojo,
+			ModelMap model, HttpServletRequest request) throws Exception {
+
+		User user = (User) SecurityContextHolder.getContext()
+				.getAuthentication().getPrincipal();
+		String userName = (String) user.getUsername();
+
+		System.out.println("It Is Accept Product Method.....");
+
+		System.out.println("Button Value  " + request.getParameter("button1"));
+		System.out.println("Task 3rd Id Value Is ;--  "
+				+ request.getParameter("taskId"));
+		System.out.println("Product Name is " + productPojo.getProductName());
+
+		
+
+		String buttonValue1 = "";
+		String returnValue = "redirect:welcome";
+		
+		if (request.getParameter("button1").equalsIgnoreCase("ACCEPT")) {
+			buttonValue1 = "approve";
+
+		
+
+			List<String> remarks1 = (ArrayList<String>) taskService
+					.getVariable(request.getParameter("taskId"), "list1");
+			remarks1.add(productPojo.getRemarks());
+			taskService.setVariable(request.getParameter("taskId"), "list1",
+					remarks1);
+
+			copyProduct(request.getParameter("taskId"), productPojo);
+
+			saveProductPojoIntoActivitiDatabse(request.getParameter("taskId"),
+					productPojo);
+
+			// ActivitiRestClient.acceptProductByReviewer(request.getParameter("taskId"),
+			// buttonValue1);
+
+			acceptProductByReviewer(request.getParameter("taskId"),
+					buttonValue1);
+
+		} else if (request.getParameter("button1").equalsIgnoreCase("REJECT")) {
+
+			buttonValue1 = "notapprove";
+			
+
+			List<String> remarks1 = (ArrayList<String>) taskService
+					.getVariable(request.getParameter("taskId"), "list1");
+			remarks1.add(productPojo.getRemarks());
+			taskService.setVariable(request.getParameter("taskId"), "list1",
+					remarks1);
+
+			copyProduct(request.getParameter("taskId"), productPojo);
+
+			saveProductPojoIntoActivitiDatabse(request.getParameter("taskId"),
+					productPojo);
+
+			
+
+			acceptProductByReviewer(request.getParameter("taskId"),
+					buttonValue1);
+
+		} else if (request.getParameter("button1").equalsIgnoreCase("CANCEL")) {
+			returnValue = "redirect:reviewPageCall";
+		}
+
+		return returnValue;
+	}
+
+	// This is For update means Edit section for Existing product
+	
+
+	@RequestMapping(value = "/viewProduct", method = RequestMethod.POST)
+	public String viewProduct(ModelMap model, HttpServletRequest request)
+			throws Exception {
+
+		String str = null;
+		String bb = request.getParameter("button1");
+		System.out.println(bb);
+		if (bb.equals("ADD")) {
+			str = "redirect:createTask";
+		} else if (bb.equals("VIEW")) {
+			System.out.println(request.getParameter("radioname"));
+			ProductPojo productPojo = (ProductPojo) iProductService
+					.getProductDetails(request.getParameter("radioname").trim());
+
+			String sReport = statusReport(productPojo.getProductId());
+			model.addAttribute("productPojo", productPojo);
+			model.addAttribute("sReport", sReport);
+
+			str = "ViewExsistingProduct";
+		}
+
+		return str;
+	}
+
+	// calling to Initiator Page
+	@RequestMapping(value = "/updateProduct", method = RequestMethod.POST)
+	public String updateProduct(
+			@ModelAttribute("productPojo") ProductPojo productPojo,
+			ModelMap model, HttpServletRequest request) throws Exception {
+		String returnTypeValue = "";
+		String buttonValue = request.getParameter("button1");
+		if (buttonValue.equals("EDIT")) {
+
+			String productType=productPojo.getProductType();							
+			model.addAttribute("taskid", "null");
+			
+			String pageType="";
+				
+				if(productType.equalsIgnoreCase("MANAGE_AIR"))
+				{
+					pageType="CreateAir";
+				}
+				else if(productType.equalsIgnoreCase("MANAGE_ACCO"))
+				{
+					pageType="CreateAccomodation";
+				}
+			//	processLockingService.updateLockingRecord(productPojo.getProductId(),1, pid);
+		
+				returnTypeValue = pageType;
+				//returnTypeValue = "AssigneTaskForUpdate";
+				//returnTypeValue = "redirect:updateDatabaseProduct?productId="+;
+		} else if (buttonValue.equals("CANCEL")) {
+			List<ProductPojo> productList = iProductService.productList();
+			model.addAttribute("productList", productList);
+			
+			//processLockingService.updateLockingRecord(productPojo.getProductId(),0, pid);
+			returnTypeValue = "manager_home";
+		} else if (buttonValue.equals("HISTORY")) {
+
+			System.out.println("Product Id is " + productPojo.getProductId());
+			List<HistoryProduct> hList = iProductService
+					.getHistoryProductDeatilsByProductID(productPojo
+							.getProductId());
+			model.addAttribute("hList", hList);
+			returnTypeValue = "ProductHitoryReport";
+		} else if (buttonValue.equals("ReleaseLock")) {
+			System.out.println("Release lock");
+
+			ProcessLocking prlocking = (ProcessLocking) processLockingService
+					.getLockingRecord(productPojo.getProductId());
+			System.out.println("Current PRID " + prlocking.getcProcessId());
+
+			
+			runtimeService.deleteProcessInstance(prlocking.getcProcessId(),
+					"Release Lock");
+			// for Release Locking
+
+			processLockingService.updateLockingRecord(
+					productPojo.getProductId(), 0,
+					productPojo.getProcessInstanceID());
+
+			List<ProductPojo> productList = iProductService.productList();
+			model.addAttribute("productList", productList);
+			returnTypeValue = "manager_home";
+
+		}
+
+		System.out.println("In Update Section " + productPojo.getDescription());
+
+		model.addAttribute("productPojo", productPojo);
+		return returnTypeValue;
+	}
+
+	/*@RequestMapping(value = "/updateDatabaseProduct", method = RequestMethod.GET)
+	public String updateDatabaseProduct(ModelMap model,
+			HttpServletRequest request) throws Exception {
+
+
+			ProductPojo productPojo = (ProductPojo) iProductService.getProductDetails(request.getParameter("productId").trim());
+
+
+			
+
+			String productType=productPojo.getProductType();							
+			
+				
+			String pageType="";
+				
+				if(productType.equalsIgnoreCase("MANAGE_AIR"))
+				{
+					pageType="CreateAir";
+				}
+				else if(productType.equalsIgnoreCase("MANAGE_ACCO"))
+				{
+					pageType="CreateAccomodation";
+				}
+				processLockingService.updateLockingRecord(productPojo.getProductId(),1, pid);
+		return pageType;
+	}*/
+	// this is product details base on product ID (For Existing Product)
+	@RequestMapping(value = "/ViewProductHistoryStatusReport", method = RequestMethod.GET)
+	public String ViewProductHistoryStatusReport(ModelMap model,
+			HttpServletRequest request) throws Exception {
+
+		List<HistoryProduct> hList = iProductService
+				.getHistoryProductDeatilsByProductID(request
+						.getParameter("productId"));
+		
+
+		List<HistoryProduct> hListbaseonProcessID = iProductService
+				.getHistoryProductDeatilsByProcessID(request
+						.getParameter("processId"));
+
+		List<JSONObject> jsondata = new ArrayList<JSONObject>();
+
+		for (HistoryProduct tempobjj : hListbaseonProcessID) {
+			jsondata.add(new JSONObject(tempobjj.getContentData()));
+		}
+
+		model.addAttribute("hList", hList);
+		model.addAttribute("jsondata", jsondata);
+		model.addAttribute("processId", request.getParameter("processId"));
+
+		return "ProductHitoryReport";
+	}
+
+	// for Assigne task to update
+
+	@RequestMapping(value = "/asigneeTaskForUpdateProduct", method = RequestMethod.POST)
+	public String asigneeTaskForUpdate(ModelMap model,
+			HttpServletRequest request) throws Exception {
+
+		User user = (User) SecurityContextHolder.getContext()
+				.getAuthentication().getPrincipal();
+		String username = (String) user.getUsername();
+		
+		pid = null;
+		System.out.println("In Assigne method name is " + username);
+		ProductPojo productPojo = (ProductPojo) iProductService
+				.getProductDetails(request.getParameter("productId").trim());
+
+		try {
+
+			pid = runtimeService
+					.startProcessInstanceByKey("TravelERPWorkflow1")
+					.getProcessInstanceId();
+
+			// String taskID = ActivitiRestClient.getRequestTaskID(pid,
+			// username);
+
+			Task task = taskService.createTaskQuery().processInstanceId(pid)
+					.singleResult();
+			task.setAssignee(username);
+			task.setOwner(username);
+			task.setDescription(request.getParameter("productName"));
+
+		
+
+			taskService.saveTask(task);
+
+		
+			taskService.complete(task.getId());
+
+			List<Task> task2 = taskService.createTaskQuery()
+					.processInstanceId(pid).list();
+			
+
+			if ((task2.size()) == 1) {
+				task2.get(0)
+						.setDescription(request.getParameter("productName"));
+				task2.get(0).setOwner(username);
+				task2.get(0).setAssignee(request.getParameter("assigneeTask"));
+				
+
+			}
+
+			taskService.saveTask(task2.get(0));
+
+			// for Product Details
+			productPojo.setProcessInstanceID(pid);
+			productPojo.setRemarks(request.getParameter("remarks"));
+
+			RemarkBean rbean = new RemarkBean();
+			rbean.setBy(username);
+			rbean.setRtimestamp(new Date().toString());
+			rbean.setText(request.getParameter("remarks"));
+			productPojo.addRemark(rbean);
+			// productPojo.setDescription("");
+			JSONObject subob = new JSONObject(productPojo);
+
+			String jsonText = subob.toString();
+			System.out.println(jsonText);
+
+			saveProductPojoIntoActivitiDatabse(task2.get(0).getId(),
+					productPojo);
+
+			
+
+		} catch (Exception er) {
+			System.out.println("Exception in Assigne Task " + er);
+		}
+
+		// for Locking purpose
+
+		processLockingService.updateLockingRecord(productPojo.getProductId(),
+				1, pid);
+
+		List<ProductPojo> productList = iProductService.productList();
+		System.out.println(productList.size());
+
+		model.addAttribute("productList", productList);
+
+		return "redirect:welcome";
+	}
+
+	// Go to Back From History Report Page
+	@RequestMapping(value = "/backToHome", method = RequestMethod.GET)
+	public String backToHome(ModelMap model, HttpServletRequest request)
+			throws Exception {
+		List<ProductPojo> productList = iProductService.productList();
+		model.addAttribute("productList", productList);
+		// return "manager_home";
+		return "redirect:welcome";
+
+	}
+
+	// this for Remarks Details
+	@RequestMapping(value = "/viewRemarks", method = RequestMethod.POST)
+	public @ResponseBody
+	String remarksView(
+			@RequestParam(value = "taskID", required = true) String taskID,
+			ModelMap model, HttpServletRequest request) throws Exception {
+
+		System.out.println("It Is Inside the  View Remarks " + taskID);
+
+		ProductPojo pojo = (ProductPojo) getProductPojoIntoActivitiDatabse(taskID);
+
+		List<RemarkBean> relist = pojo.getRemarkList();
+		String rData = "<table><tr bgcolor='Lightblue'> <th><font align='center'><b>Remark By</b></font></th><th><font align='center'><b>Time</b></font></th><th><font align='center'><b>Text</b></font></th></tr>";
+
+		for (RemarkBean bb : relist) {
+			rData = rData + "<tr><td>" + bb.getBy() + "</td><td>"
+					+ bb.getRtimestamp() + "</td><td>" + bb.getText()
+					+ "</td></tr>";
+
+		}
+		rData = rData + "</table>";
+		System.out.println(rData);
+
+		return rData;
+	}
+
+	// for release
+	@RequestMapping(value = "/releaseProductByManager", method = RequestMethod.GET)
+	public String releaseProductByManager(ModelMap model,
+			HttpServletRequest request) throws Exception {
+
+		
+		runtimeService.deleteProcessInstance(request.getParameter("prId"),
+				"Release Lock");
+
+		return "redirect:welcome";
+	}
+
+	// jasper reports
+
+	@RequestMapping(value = "/jasperReports1", method = RequestMethod.GET)
+	public String jasperReports1(ModelMap model, HttpServletRequest request)
+			throws Exception {
+		System.out.println("Jasper reports "
+				+ request.getParameter("processId"));
+
+		/* List<Map> taskDetails1= iProductService.getTaskDetails("1784"); */
+		List<Map> taskDetails1 = iProductService.getTaskDetails(request
+				.getParameter("processId"));
+		System.out.println("Map Size is " + taskDetails1.size());
+
+		for (Map m : taskDetails1)
+			System.out
+					.println("value is " + m.get("ID") + "  " + m.get("NAME"));
+
+		List<ProductPojo> productList = iProductService.productList();
+
+		// JRDataSource ds = new JRBeanCollectionDataSource(productList);
+		JRDataSource ds = new JRBeanCollectionDataSource(taskDetails1);
+
+		model.addAttribute("datasource1", ds);
+		model.addAttribute("format", "pdf");
+
+		return "multiReport";
+
+		// return null;
+	}
+
+	private User getUser() {
+		return (User) SecurityContextHolder.getContext().getAuthentication()
+				.getPrincipal();
+
+	}
+
+	private void copyProduct(String taskId, ProductPojo productPojo)
+			throws Exception {
+
+		ProductPojo pojo = (ProductPojo) getProductPojoIntoActivitiDatabse(taskId);
+
+		productPojo.setRemarkList(pojo.getRemarkList());
+		addRemarks(productPojo);
+		//addRemarks(ProductPojo.class);
+	}
+
+	
+	private void addRemarks(ProductPojo pojo) {
+	
+	//private  void addRemarks(Object pojo) {
+		RemarkBean rbean = new RemarkBean();
+		
+		rbean.setText(pojo.getRemarks());
+		rbean.setBy(getUser().getUsername());
+		rbean.setRtimestamp(new Date().toString());
+		pojo.addRemark(rbean);
+	}
+
+	private <T> T bindMapperObject(String ob, Class<T> clazz) throws Exception {
+		ObjectNode on = (ObjectNode) new ObjectMapper().readTree(ob);
+		System.out.println("In controller " + on);
+		ObjectMapper mapper = new ObjectMapper();
+		return mapper.readValue(on, clazz);
+
+	}
+
+	public void saveProcessLokingDetails(ProductPojo productPojo) {
+		ProcessLocking pLocking = new ProcessLocking();
+		pLocking.setCreateTime(new Date());
+		pLocking.setProcessId(productPojo.getProcessInstanceID());
+		pLocking.setProductId(productPojo.getProductId());
+		pLocking.setProductName(productPojo.getProductName());
+		pLocking.setStatus(new Integer(0));
+		processLockingService.saveLockingRecord(pLocking);
+	}
+
+	private String statusReport(String prID) {
+		String sr = "notrunning";
+		ProcessLocking pLocking = processLockingService.getLockingRecord(prID);
+		Integer statusR = pLocking.getStatus();
+		if (statusR == 1) {
+			sr = "running";
+		}
+
+		return sr;
+	}
+	
+	private boolean getProductFromProcessLocking(String prID) {
+		
+		ProcessLocking pLocking = processLockingService.getLockingRecord(prID);
+		
+		if(pLocking==null)
+		return false;
+		else
+			return true;
+	}
+
+
+	public void acceptProductByReviewer(String taskId, String gValue) {
+		System.out.println("This is AcceptProduct Block");
+		String prid = taskService.createTaskQuery().taskId(taskId)
+				.singleResult().getProcessInstanceId();
+		Task task3 = taskService.createTaskQuery().taskId(taskId)
+				.singleResult();
+		// String uName=getUser().getUsername();
+		// taskService.claim(taskId, uName);
+		String tOwner = task3.getOwner();
+		String tDescription = task3.getDescription();
+
+		// start syn
+		synchronized (this) {
+			if (gValue.equalsIgnoreCase("notapprove")) {
+				taskService.setVariable(taskId, "requestApprove", gValue);
+			}
+		}
+
+		// closing  
+		taskService.complete(taskId);
+
+		String taskStatus = "";
+		List<Task> task4 = taskService.createTaskQuery()
+				.processInstanceId(prid).list();
+		for (Task tempTask : task4) {
+			tempTask.setOwner(tOwner);
+			tempTask.setDescription(tDescription);
+			if (tempTask.getAssignee() == null) {
+				taskStatus = "done";
+			}
+			taskService.saveTask(tempTask);
+		}
+
+		// for checking
+		if (taskStatus.equalsIgnoreCase("done")) {
+
+			String sName = (String) taskService.getVariable(task4.get(0)
+					.getId(), "requestApprove");
+			System.out.println("in done valeu of xml is " + sName);
+
+			if (sName.equalsIgnoreCase("approve")) {
+				System.out.println("In Appove block when done M  :--"
+						+ task4.get(0).getName());
+				// task4.get(0).setAssignee("james");
+				taskService.setVariable(task4.get(0).getId(), "discription1",
+						tDescription);
+
+			} else if (sName.equalsIgnoreCase("notapprove")) {
+
+				List<HistoricTaskInstance> taskins = historyService
+						.createHistoricTaskInstanceQuery()
+						.processInstanceId(prid).list();
+				task4.get(0).setAssignee(taskins.get(0).getAssignee());
+
+			} else {
+				System.out.println("nothing........");
+			}
+			taskService.saveTask(task4.get(0));
+
+		}
+	}
+
+	public void saveProductPojoIntoActivitiDatabse(String taskID,
+			Object productPojo) {
+
+		HashMap<String, Object> hp = new HashMap<String, Object>();
+		hp.put("productDetails", productPojo);
+		taskService.setVariable(taskID, "productDetails", hp);
+		
+
+	}
+
+	public Object getProductPojoIntoActivitiDatabse(String taskID) {
+		HashMap<String, ProductPojo> mapObj = (HashMap) taskService
+				.getVariable(taskID, "productDetails");
+		
+	
+		return (ProductPojo) mapObj.get("productDetails");
+	}
+
+	private List<String> getAllUsers(String rollName) {
+		List<org.activiti.engine.identity.User> ulist = identityService
+				.createUserQuery().memberOfGroup(rollName).list();
+		System.out.println("User List Size is " + ulist.size());
+
+		List<String> tempList = new ArrayList<String>();
+		for (org.activiti.engine.identity.User uTemp : ulist)
+			tempList.add(uTemp.getId());
+
+		return tempList;
+	}
+
+	private void setAssigneNameToReviewerAndManager(String taskID,
+			String productType) {
+
+		//if (productType.equalsIgnoreCase("air") || productType.equalsIgnoreCase("cruise")) {
+		if (productType.equalsIgnoreCase("MANAGE_AIR") || productType.equalsIgnoreCase("MANAGE_CRUISE")) {
+
+			taskService.setVariable(taskID, "dManager", "airManager");
+			taskService.setVariable(taskID, "dReviewer", "airReviewer");
+//		} else if (productType.equalsIgnoreCase("accomodation")) {
+		} else if (productType.equalsIgnoreCase("MANAGE_ACCO")) {
+
+			taskService.setVariable(taskID, "dReviewer", "accomReviewer");
+			taskService.setVariable(taskID, "dManager", "accomManager");
+
+		} else {
+			taskService.setVariable(taskID, "dReviewer", "hussy");
+			taskService.setVariable(taskID, "dManager", "james");
+
+		}
+	}
+
+	public void startProductSetupWorkFlow(String username,
+			ProductPojo productPojo, String buttonValue) {
+
+		// String buttonValue="save";
+
+		try {
+
+			pid = runtimeService
+					.startProcessInstanceByKey("TravelERPWorkflow1")
+					.getProcessInstanceId();
+
+			Task task = taskService.createTaskQuery().processInstanceId(pid)
+					.singleResult();
+			task.setAssignee(username);
+			// task.setAssignee("robert");
+			task.setOwner(username);
+			// task.setDescription(request.getParameter("productName"));
+			task.setDescription(productPojo.getProductName());
+
+			// for Product Details
+
+			RemarkBean rbean = new RemarkBean();
+			rbean.setBy(username);
+			rbean.setRtimestamp(new Date().toString());
+			rbean.setText(productPojo.getRemarks());
+
+			productPojo.setProcessInstanceID(pid);
+			productPojo.addRemark(rbean);
+			productPojo.setCreatedBy(username);
+
+			HashMap<String, Object> hp = new HashMap<String, Object>();
+			hp.put("productDetails", productPojo);
+			System.out.println("Before setVariables() ============");
+
+			List<String> ll = new ArrayList<String>();
+			ll.add("");
+			taskService.setVariable(task.getId(), "list1", ll);
+			taskService.setVariable(task.getId(), "discription1", "approve");
+			taskService.setVariable(task.getId(), "requestApprove", "approve");
+			taskService.setVariable(task.getId(), "productType",productPojo.getProductType());
+
+			// saveProductPojoIntoActivitiDatabse(task2.get(0).getId(),productPojo);
+			saveProductPojoIntoActivitiDatabse(task.getId(), productPojo);
+
+			System.out.println("After setVariables() ============");
+			taskService.saveTask(task);
+
+			System.out.println("Before  saveProcessLoking() ============");
+			
+			
+			if(getProductFromProcessLocking(productPojo.getProductId())==false)
+				saveProcessLokingDetails(productPojo);
+			if(getProductFromProcessLocking(productPojo.getProductId())==true)
+			processLockingService.updateLockingRecord(productPojo.getProductId(),1, pid);
+			
+			System.out
+					.println("After ProcessLocking() =====Product Type======="
+							+ productPojo.getProductType());
+
+			// setting for reviewer and manager user
+			setAssigneNameToReviewerAndManager(task.getId(),
+					productPojo.getProductType());
+
+			// This is for step configuration base on Product type.
+			if(productPojo.getProductType().equalsIgnoreCase("MANAGE_AIR")){
+				Map map=getAssignAccessRols("MANAGE_AIR");
+				taskService.setVariable(task.getId(), "Access",map.get("IS_QC_REQ"));
+			}else if(productPojo.getProductType().equalsIgnoreCase("MANAGE_ACCO")){
+				Map map=getAssignAccessRols("MANAGE_ACCO");
+				taskService.setVariable(task.getId(), "Access",map.get("IS_QC_REQ"));
+			}else if(productPojo.getProductType().equalsIgnoreCase("MANAGE_CRUISE")){
+				Map map=getAssignAccessRols("MANAGE_CRUISE");
+				taskService.setVariable(task.getId(), "Access",map.get("IS_QC_REQ"));
+			}
+			
+			// for Task 2
+			if (buttonValue.equalsIgnoreCase("Submit")) {
+
+				//taskService.setVariable(task.getId(), "productType", productPojo.getProductType());
+				taskService.complete(task.getId());
+				List<Task> task2 = taskService.createTaskQuery()
+						.processInstanceId(pid).list();
+
+				if ((task2.size()) == 1) {
+					task2.get(0).setOwner(username);
+					task2.get(0).setDescription(productPojo.getProductName());
+
+				}
+
+				taskService.saveTask(task2.get(0));
+			}
+
+		} catch (Exception er) {
+			System.out.println("Exception in Assigne Task " + er);
+		}
+
+		// return productPojo;
+	}
+	
+
+private Map getAssignAccessRols(String function){
+	
+		List<Map> roleAccessDetails = iProductService.getAssignmentRoles(function);
+		System.out.println("Map Size is " + roleAccessDetails.size());
+	
+		Map m1 = null;
+		for (Map m : roleAccessDetails){
+			System.out
+					.println("value is " + m.get("IS_CREATOR_REQ") + "  " + m.get("IS_QC_REQ") +"  " +m.get("IS_APPROVER_REQ"));
+			m1=m;
+		}
+		return m1;
+		
+	}
+
+}
+============================End===================
+	-----------ProductCreationController 
+
+import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.cnk.workflow.entities.ProductPojo;
+
+
+@Controller
+public class ProductCreationController {
+
+	
+	
+	@RequestMapping(value = "/craeteProductPageCall", method = RequestMethod.GET)
+	public String craeteProductPageCall(ModelMap model,
+			HttpServletRequest request) throws Exception {
+		
+				ProductPojo pojo =new ProductPojo();
+				pojo.setProductId(UUID.randomUUID().toString().substring(0,13));
+				model.addAttribute("productPojo", pojo);
+				model.addAttribute("taskid", "null");
+				
+		
+				String productType=request.getParameter("productType");
+							
+				pojo.setProductType(productType);
+				String pageType="CreateAir";
+				
+				if(productType.equalsIgnoreCase("MANAGE_AIR"))
+				{
+					pageType="CreateAir";
+				}
+				else if(productType.equalsIgnoreCase("MANAGE_ACCO"))
+				{
+					pageType="CreateAccomodation";
+				}
+			 
+				
+				
+				
+		//return "ProuctCreatePage";
+		
+		return pageType;
+	}
+	
+	
+}
+
+
+
+
+
