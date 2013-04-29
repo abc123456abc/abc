@@ -1,1 +1,153 @@
 aa
+  	---tiles configuration jsp
+
+-----------layout.jsp
+<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<%
+    response.setHeader("Cache-Control","no-cache,no-store,must-revalidate");//HTTP 1.1
+    response.setHeader("Pragma","no-cache"); //HTTP 1.0
+    response.setDateHeader ("Expires", -1); //prevents caching at the proxy server
+%>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="css/style.css" type="text/css" />
+	<title><tiles:insertAttribute name="title" ignore="true" /></title>
+	<script type="text/javascript">
+		document.createElement('header');
+		document.createElement('nav');
+		document.createElement('section');
+		document.createElement('article');
+		document.createElement('footer');
+		
+	
+	   
+	
+	</script>
+</head>
+<body>
+
+	<table width="100%">
+		<tr>
+			<td width="100%" height="80" colspan="2" background-colour="004F943" position="relative">
+				<tiles:insertAttribute name="header" />
+			</td>
+		</tr>
+		<tr>						
+			<td width="100%"><tiles:insertAttribute name="body" /></td>	<!--  height="430" -->
+		</tr>
+		<tr>
+			<td background-color="EAECE7" border-bottom="1px solid C7C7C7" border-top="1px solid C7C7C7" height="50" bottom="0" font-size="11" margin-top="20"  padding="8px 0" text-align="center" colspan="2">
+				<tiles:insertAttribute name="footer"/>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>
+============================end===================
+	------------------------mainheader.jsp
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
+<%@ page session="true" %>
+<c:choose>
+	<c:when test="${fn:contains(sessionScope.roleType, 'airReviewer')}"><jsp:include page="/pages/common/reviewerHeader.jsp" flush="true"/></c:when>
+	<c:when test="${fn:contains(sessionScope.roleType, 'airManager')}"><jsp:include page="/pages/common/approverHeader.jsp" flush="true"/></c:when>
+	<c:when test="${fn:contains(sessionScope.roleType, 'configurator')}"><jsp:include page="/pages/common/createrHeader.jsp" flush="true"/></c:when>
+	<c:otherwise><jsp:include page="/pages/common/header.jsp" flush="true"/></c:otherwise>
+</c:choose>
+
+===========================End==============================
+	--------------footer.jsp
+<footer><div id="footer">Copyright. Cox &amp; Kings Ltd. All rights reserved.</div></footer>
+=================================End====================
+	------------reviewerHeader.jsp
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
+<header>
+	<img src="images/cnk_logo.jpg" alt="Cox and Kings" title="Cox and Kings" border="0" />
+	<p class="login_txt">Welcome : ${userName}</p>
+</header>
+
+<!-- navigation start-->
+<nav>
+<ul class="topmenu" id="css3menu1">
+	<!-- <li class="toproot"><a href="#"><span>Manage Product</span></a>
+	 <ul>
+		<li><a href="search">Air</a></li>
+		<li><a href="#">Accomodation</a></li>
+		<li><a href="#">Cruise</a></li>
+	</ul>
+	</li> -->
+	<li class="toproot"><a href="reviewPageCall"><span>View Our Task</span></a>
+    <li class="toproot"><a href="#"><span>TBD</span></a>
+    <li class="toproot"><a href="#"><span>TBD</span></a>
+</ul>
+<p><a href="home">Home</a> | <a href="#">About us</a> | <a href="#">Notifications</a> | <a href="#">Chat</a> | <a href="#">Help</a> | <a href="<c:url value="/j_spring_security_logout" />">Sign Out</a></p></nav>
+<!-- navigation end-->
+=======================================End===============
+	------------------createrHeader.jsp
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%
+    response.setHeader("Cache-Control","no-cache,no-store,must-revalidate");//HTTP 1.1
+    response.setHeader("Pragma","no-cache"); //HTTP 1.0
+    response.setDateHeader ("Expires", -1); //prevents caching at the proxy server
+%>
+<header>
+<script>
+    history.forward();
+</script>
+	<img src="images/cnk_logo.jpg" alt="Cox and Kings" title="Cox and Kings" border="0" />
+	<p class="login_txt">Welcome : ${userName}</p>
+</header>
+
+<!-- navigation start-->
+<nav>
+<ul class="topmenu" id="css3menu1">
+	<li class="toproot"><a href="#"><span>Manage Product</span></a>
+	 <ul>
+		<li><a href="search">Air</a></li>
+		<li><spring:url value="/accommdationSearch" var="accommdationSearch" /><a href="${accommdationSearch}">Accomodation</a></li>
+		
+		<li><a href="GridTest">Cruise</a></li>
+		<li><a href="GridTest">Cruise2</a></li>
+	</ul>
+	</li>
+	<li class="toproot"><a href="ViewTaskCreate"><span>View Pending Task</span></a>
+    <li class="toproot"><a href="#"><span>TBD</span></a>
+    <li class="toproot"><a href="#"><span>TBD</span></a>
+</ul>
+<p><a href="home">Home</a> | <a href="#">About us</a> | <a href="#">Notifications</a> | <a href="#">Chat</a> | <a href="#">Help</a> | <a href='<c:url value="/j_spring_security_logout" />'>Sign Out</a></p>
+</nav>
+<!-- navigation end-->
+
+=======================================End====================
+	------------------approverHeader.jsp
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
+<header>
+	<img src="images/cnk_logo.jpg" alt="Cox and Kings" title="Cox and Kings" border="0" />
+	<p class="login_txt">Welcome : ${userName}</p>
+</header>
+
+<!-- navigation start-->
+<nav>
+<ul class="topmenu" id="css3menu1">
+	<!-- <li class="toproot"><a href="#"><span>Manage Product</span></a>
+	 <ul>
+		<li><a href="search">Air</a></li>
+		<li><a href="#">Accomodation</a></li>
+		<li><a href="#">Cruise</a></li>
+	</ul>
+	</li> -->
+	<li class="toproot"><a href="ViewTaskForApprove"><span>View Task For Approve</span></a>
+    <li class="toproot"><a href="ViewPendingTaskStatus"><span>View  Pending Task Status</span></a>
+    <li class="toproot"><a href="#"><span>TBD</span></a>
+</ul>
+<p><a href="home">Home</a> | <a href="#">About us</a> | <a href="#">Notifications</a> | <a href="#">Chat</a> | <a href="#">Help</a> | <a href='<c:url value="/j_spring_security_logout" />'>Sign Out</a></p></nav>
+<!-- navigation end-->
+
+====================================End=====================
+	--------------------
