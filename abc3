@@ -1,1 +1,610 @@
 bb
+
+  ------New Jsp
+
+----------index.jsp
+<%response.sendRedirect("login");%>
+
+=====================End======================
+  -------------login
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
+
+<style type="text/css">
+.errorblock {
+	color: #ff0000;
+	background-color: #ffEEEE;
+	border: 3px solid #ff0000;
+	padding: 8px;
+	margin: 16px;
+}
+
+</style>
+<script>
+
+$(document).ready(function(){
+	
+	$(window).load(function(){
+		document.f.j_username.focus();
+	});
+});
+
+</script>
+
+
+	<form name='f' action="<c:url value='j_spring_security_check' />"
+		method='POST'>
+
+
+	<table  width="1230" border="0">
+		<tr valign="top">
+
+			<td
+				style="text-align: top;"></br>
+				<!-- <font style="font-family: inherit; font-style: italic; " > -->
+				
+				<div align="center">
+                    <img id="abcd"  align="top" src="./images/imagesCAENVRE0.jpg"/>
+                 </div>
+                 
+				<div style="color: maroon;">
+					<center>
+						<b> Username:</b> <input type="text" name='j_username' value=''>
+					</center>
+				</div>
+				</br>
+				
+				<div style="color: maroon;" >
+					<center>
+						<b> Password:</b> <input type="password" name='j_password'>
+					</center>
+				</div>
+				
+				</br>
+				<div style="color: maroon;" align="center" >
+					
+						<input id="abc" type="submit" value="Submit" name="submit" class="add_btn"/>&nbsp;&nbsp;
+						<input id="abc" type="reset" value="Reset"  class="add_btn" />
+					    
+					    
+                </div>
+                
+				<c:if test="${not empty error}">
+		<div  style="color: red;" align="center">
+			Your login attempt was not successful, try again.<br /> Caused :
+			${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}
+		</div>
+	</c:if>
+				</td>
+				
+
+		</tr>
+
+</table>
+ 	</form>
+
+
+=======================End===================
+	------------------remarks
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+
+<script type="text/javascript"
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
+
+
+
+<script type="text/javascript">
+$(document)
+		.ready(
+				function() {
+
+						 $.ajax({
+
+							type : 'POST',
+							url : 'viewRemarks',
+							//dataType: 'json',
+							data:{taskID:'<%= request.getParameter("taskId") %>'},
+							success : function(result) {
+								//alert('hai ajax reponse   ' + result);
+								document.getElementById("remarksData").innerHTML=result;
+
+							}
+						}); 
+						
+						
+							 
+						//alert("heloo.....");
+
+	
+
+	});
+</script>
+
+
+</head>
+<body>
+
+
+
+
+	<center>
+	It is Remarks page
+					<div id="remarksData">
+						
+						</div>
+						
+						
+
+	</center>
+</body>
+</html>
+
+
+=====================End======================
+	-------------ReviewListPage
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
+<%@ page isELIgnored="false"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Layout Design</title>
+<style type="text/css">
+img {
+	float: left;
+	width: 110px;
+	height: 80px;
+	margin: 5px;
+}
+
+a.two:link {color:#ff0000;text-decoration:none;}
+a.two:visited {color:#0000ff;text-decoration:none;}
+a.two:hover {font-size:150%;;text-decoration:none;background:#66ff66;}
+
+
+</style>
+</head>
+<body>
+
+	<table width="1230" height="600" border="0">
+	
+
+		<tr valign="top">
+
+			<td
+				style="background-color: #eeeeee; height: 430px; text-align: top;"></br>
+				<font style="font-size: x-large; font-style: italic; color: rgb(0,79,147);"><b><u>
+							List Of Pending Tasks For Review:</u></b></font> </br></br>
+				<!-- <a href="ListOfPendingTaskForReviewPageCall">View Pending Task</a>	 -->		
+				<center>
+					<table border="1">
+
+						<tr bgcolor="Lightblue">
+						
+							<th><font align="center"><b>NAME</b></font></th>
+							<th><font align="center"><b>OWNER</b></font></th>
+							<th><font align="center"><b> DESCREPTION</b></font></th>
+							<th><font align="center"><b>CREATION DATE </b></font></th>
+							
+						</tr>
+						
+						<c:forEach var="task1" items="${task}">
+							<tr>
+								<td>
+								
+							
+								<%-- <a class="two" href="claimTaskToUser?taskId=${task1.id}">CLAIM</a> --%>
+								<a class="two" href="reviewProductDetails?taskId=${task1.id}">CLAIM</a>
+								</td>
+								
+								<%-- <td><a class="two" href="reviewProductDetails?taskId=${task1.getString("id")}">${task1.getString("name")}</a></td> --%>
+								
+								<%-- <td>${task1.name}</td> --%>
+								
+								<td>${task1.getOwner()}</td> 
+								<td>${task1.description}</td>
+								<td>${task1.getCreateTime()}</td>
+								
+								
+								</tr>
+						</c:forEach>
+						
+						
+						<c:forEach var="task2" items="${assigneeTask}">
+							<tr>
+								<td><a class="two" href="reviewProductDetails?taskId=${task2.id}">${task2.name}</a> </td>
+								<td>${task2.getOwner()}</td> 
+								<td>${task2.description}</td>
+								<td>${task2.getCreateTime()}</td>
+							 </tr>
+						
+						</c:forEach>
+						
+						
+					</table>
+				</center>
+				
+		  </td>
+		</tr>		
+
+		
+	</table>
+
+</body>
+
+
+</body>
+</html>
+
+=======================End===================
+	-----------ViewPendingAppTaskPage
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
+
+<%@ page isELIgnored="false"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Layout Design</title>
+<style type="text/css">
+img {
+	float: left;
+	width: 110px;
+	height: 80px;
+	margin: 5px;
+}
+
+a.two:link {color:#ff0000;text-decoration:none;}
+a.two:visited {color:#0000ff;text-decoration:none;}
+a.two:hover {font-size:150%;;text-decoration:none;background:#66ff66;}
+
+</style>
+</head>
+<body>
+
+	<table width="1230" height="600" border="0">
+		<%-- <tr>
+			<td colspan="2"
+				style="background-color: rgb(0, 79, 147); height: 80px;"><img
+				src="./resources/images/cnk_logo.gif" /> <font color="white">
+					<center>
+						<b><i><h1>WorkFlow Management using Activiti Engine</h1></i></b>
+					</center>
+			</font>
+				<div align="right">
+					<a href="<c:url value="/j_spring_security_logout"/>" style="color: white; text-decoration: none;">
+						LogOut</a>
+				</div></td>
+		</tr> --%>
+
+		<tr valign="top">
+
+			<td
+				style="background-color: #eeeeee; height: 430px;  text-align: top;"></br>
+				<font style="font-size: x-large; font-style: italic; color: rgb(0,79,147);"><b><u>
+							List Of  Tasks For Approve:</u></b></font> </br></br>
+				<center>
+					<table border="1">
+
+						<tr bgcolor="Lightblue">
+							
+							<th><font align="center"><b>NAME</b></font></th>
+							<th><font align="center"><b>OWNER</b></font></th>
+							<th><font align="center"><b> DESCRIPTION</b></font></th>
+							<th><font align="center"><b>CREATION DATE </b></font></th>
+							
+						</tr>
+						
+						<c:forEach var="task2" items="${groupTask}">
+							<tr>
+								<td><a class="two" href="productDetailsForApprovel?taskId=${task2.id}">CLAIM</a> </td>
+								<td>${task2.getOwner()}</td> 
+								<td>${task2.description}</td>
+								<td>${task2.getCreateTime()}</td>
+							 </tr>
+						
+						</c:forEach>
+						
+						<c:forEach var="task1" items="${task}">
+							<tr>
+								<td><a class="two" href="productDetailsForApprovel?taskId=${task1.id}" >${task1.name}</a></td>
+								<td>${task1.getOwner()}</td> 
+								<td>${task1.description}</td>
+								<td>${task1.getCreateTime()}</td>
+								
+							</tr>
+						</c:forEach>
+						
+						
+						
+					</table>
+				</center>
+				
+		  </td>
+		</tr>		
+<!-- <tr>
+	<td><a href="backToHome" >BACK</a> </td>
+ </tr>
+		<tr>
+			<td colspan="2"
+				style="background-color: rgb(0, 79, 147); text-align: right;">
+				<font color="white"> <i>Your in Manager Approval List Page</i>
+			</font>
+			</td>
+		</tr> -->
+	</table>
+
+</body>
+
+
+</body>
+</html>
+
+
+=====================End======================
+	-------------ViewPendingTaskStatusReport.jsp
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
+
+<%@ page isELIgnored="false"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Layout Design</title>
+<style type="text/css">
+img {
+	float: left;
+	width: 110px;
+	height: 80px;
+	margin: 5px;
+}
+
+a.two:link {color:#ff0000;text-decoration:none;}
+a.two:visited {color:#0000ff;text-decoration:none;}
+a.two:hover {font-size:150%;;text-decoration:none;background:#66ff66;}
+a.two:active {background-color:#FF704D;} 
+
+
+
+.first{
+float: left;
+width: 40%;
+}
+.second{
+float: left;
+width:60%;
+}
+
+</style>
+</head>
+<body>
+
+
+	<table width="1230" height="600" border="0">
+	
+
+		<tr valign="top">
+
+<td>
+			<div class="first">
+				<font style="font-size: x-large; font-style: italic; color: rgb(0,79,147);"><b><u>
+							List Of  Process Status:</u></b></font> </br></br>
+				<center>
+					<table border="1">
+
+						<tr bgcolor="Lightblue">
+											
+							<th><font align="center"><b>PROCCESS ID</b></font></th>
+													
+							<th><font align="center"><b>DESCRIPTION</b></font></th>
+							<th><font align="center"><b>ACTION</b></font></th>
+													
+						</tr>
+						
+						<c:forEach var="task1" items="${tempMap}">
+							<tr>
+							
+								<td><a class="two" href="ViewPendingTaskStatusReportDetails?taskId=${task1.key}" >${task1.key}</a></td>
+								<td>${task1.value}</td>
+								<td><a class="two" href="releaseProductByManager?prId=${task1.key}" >RELEASE</a> </td>
+								
+							</tr>
+						</c:forEach>
+						
+					</table>
+				</center>
+				</div>
+				
+				<div class="second">
+				<c:if test="${taskins!=null}">
+					<font style="font-size: x-large; font-style: italic; color: rgb(0,79,147);"><b><u>
+							 Task Report Status For : ${pid} </u></b></font> </br></br>
+				<%-- <center> --%>
+					<table border="1">
+		  
+		  				<tr bgcolor="Lightblue">
+											
+							<th><font align="center"><b>TASK ID</b></font></th>
+							<th><font align="center"><b>TASK NAME</b></font></th>
+							<th><font align="center"><b>ASSIGNEE NAME</b></font></th>
+							<th><font align="center"><b>STATUS</b></font></th>
+													
+						</tr>
+		   					<c:forEach var="task2" items="${taskins}">
+							<tr>
+								<%-- <td>${task2.getId()}</td>
+								<td>${task2.getName()}</td>
+								<td>${task2.getAssignee()}</td> --%>
+								
+								<%-- <td>${task2.getString("taskId")}</td> --%>  <td>${task2.getId()}</td>
+								<%-- <td>${task2.getString("taskName")}</td>--%><td>${task2.getName()}</td>
+								<%-- <td>${task2.getString("assignee")}</td> --%> <td>${task2.getAssignee()}</td>
+								
+								
+								<td>
+								<c:set var="kk" value="${task2.getDeleteReason()}"></c:set>
+								<c:if test="${kk==null}">
+									<font  color="red">PENDING</font>
+								</c:if>
+								${task2.getDeleteReason()}
+								</td>
+								
+								<!-- based on restapi -->
+								<%-- <td>
+															
+								${task2.completed}
+								</td> --%>
+								
+								
+								
+							</tr>
+						</c:forEach>
+						</table>
+						</c:if>
+				<%-- 	</center> --%>
+				</div>
+	</td>	  
+		 
+		</tr>	
+			</table>
+
+</body>
+
+
+</body>
+</html>
+
+
+=======================End===================
+	------------------ViewTaskForCreate.jsp
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
+<%@ page isELIgnored="false"%>
+
+<!-- <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" type="text/css" /> -->
+<script type="text/javascript" src="script/jquery-1.8.3.js"></script>
+<script type="text/javascript" src="script/jquery-ui-1.9.2.custom.js"></script>
+<!-- <script type="text/javascript" src="script/jquery/jquery-1.4.4.min.js"></script> -->
+<!-- <link rel="stylesheet" type="text/css" media="screen" href="css/jquery/ui-lightness/jquery-ui-1.8.6.custom.css" />
+ --><!-- <link rel="stylesheet" type="text/css" media="screen" href="css/jqgrid/ui.jqgrid.css" /> -->
+<script type="text/javascript" src="script/jqgrid/grid.locale-en.js" ></script>
+<script type="text/javascript" src="script/jqgrid/jquery.jqGrid.min.js"></script>
+<script type="text/javascript" src="script/jqGridTravelERP.js"></script>
+<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/redmond/jquery-ui.css" />
+<link rel="stylesheet" type="text/css" href="http://www.ok-soft-gmbh.com/jqGrid/jquery.jqGrid-4.3.1/css/ui.jqgrid.css" />
+
+
+<style>
+    .midbox{clear:both;}
+    
+   .innerbx{
+    min-height:70px;
+	clear:both;
+	display:block;
+	border-radius:4px;
+	border:1px solid #464545;
+	margin:15px 15px 50px;
+}
+
+</style>
+
+
+<div  class="innerbx" >
+
+
+<article>
+<h1>List Of Pending Tasks For Configure</h1>
+<!-- formrow start-->
+
+
+<!-- grid start -->
+<!-- formrow start-->
+<div class="formrow" align="center">
+	<div id="jqgrid"  >
+	      <table style="width:100%;" >
+							  <tr bgcolor="Lightblue">
+						
+							
+							<th><font align="center"><b>NAME</b></font></th>
+							
+							
+							
+							<th><font align="center"><b>OWNER</b></font></th>
+							<th><font align="center"><b> DESCRIPTION</b></font></th>
+							<th><font align="center"><b>CREATION DATE </b></font></th>
+							
+						
+						</tr>
+						
+						<c:forEach var="task1" items="${task}">
+							<tr>
+								
+								
+								<td align="center"><a class="two" href="craeteProduct?taskId=${task1.id}">${task1.name}</a></td>
+								<td align="center">${task1.getOwner()}</td> 
+								<td align="center">${task1.description}</td>
+								<td align="center">${task1.getCreateTime()}</td>
+								
+								
+								
+							</tr>
+						</c:forEach>
+						
+						<c:forEach var="task2" items="${groupTask}">
+						
+						<c:if test="${ task2.getAssignee() == null }">
+							<tr>
+								<td align="center"> <a class="two" href="craeteProduct?taskId=${task2.id}">CLAIM</a> </td>
+								<td align="center">${task2.getOwner()}</td> 
+								<td align="center">${task2.description}</td>
+								<td align="center">${task2.getCreateTime()}</td>
+							
+							 </tr>
+						</c:if>
+							
+						
+						</c:forEach>
+
+	      </table>
+	      <div id="pager" style="height:1%"></div>
+	</div>
+</div>
+<!-- formrow end-->
+<!-- grid end -->
+
+
+<!-- </div> -->
+<!-- formrow end-->
+
+
+
+
+</article>
+
+
+<!-- form end-->
+
+</div>
+<!-- form section end-->
+
+
+
+
+=====================End======================
