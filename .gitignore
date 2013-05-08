@@ -1,1 +1,1178 @@
 aa
+
+CreateAir.jsp
+CreateAccomodation.jsp
+ListOfPendingTaskForReview.jsp
+ProductDetailsForApprovel.jsp
+ProductHitoryReport.jsp
+ProuctCreatePage.jsp
+
+
+  -----------CreateAir.jsp
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Layout Design</title>
+<style type="text/css">
+img {
+	float: left;
+	width: 110px;
+	height: 80px;
+	margin: 5px;
+}
+
+input#abc {
+	font-size: 15px;
+	font-weight: bold;
+	color: white;
+	width: 120px;
+	background-color: #004F93;
+	border-style: hidden;
+}
+
+td {
+	color: maroon;
+	font-size:20px;
+}
+td.report {
+	color: red;
+	font-size:15px;
+}
+</style>
+
+<script type="text/javascript"
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
+ <script type="text/javascript">
+function openDialog(form,url) {
+    var result = window.showModalDialog(url, form, "dialogWidth:600px; dialogHeight:350px; align:right");
+    
+}
+</script> 
+
+</head>
+<body>
+	<form:form id="hotelBookingEngineForm" name="HotelBookingEngineForm"
+		method="post" action="productCreateStart?taskId=${taskid}"
+		modelAttribute="productPojo">
+		<table width="1230" height="600" border="0">
+			<tr>
+				<td colspan="2"
+					style="background-color: rgb(0, 79, 147); height: 80px;"><img
+					src="./resources/images/cnk_logo.gif" /> <font color="white">
+						<center>
+							<b><i><h1>WorkFlow Management using Activiti Engine</h1></i></b>
+						</center>
+				</font>
+					<div align="right">
+						<a href="<c:url value="/j_spring_security_logout" />"
+							" style="color: white; text-decoration: none;"> LogOut</a>
+					</div></td>
+			</tr>
+
+			<tr valign="top">
+
+				<td
+					style="background-color: #eeeeee; height: 430px; text-align: top;"></br>
+
+					<font
+					style="font-size: x-large; font-style: italic; color: rgb(0, 79, 147);"><b><u>
+								Configure  Air Product :</u></b></font> </br> </br>
+					<center>
+						<table>
+							<tr>
+
+								<td><b>Product ID:</b></font></td>
+								<td><input type="hidden" name="productId"
+									value="${productPojo.productId}" readonly />${productPojo.productId}</td>
+									
+							</tr>
+							<tr>
+
+								<td><b>Product Name:</b></td>
+
+								<td><input type="text" name="productName"
+									value="${productPojo.productName}" /></td>
+							</tr>
+							<tr>
+
+								<td><b>Product Type:</b></td>
+
+								<td><input type="text" name="productType"
+									value="${productPojo.productType}"  readonly/></td>
+									
+									<!-- <td>
+										<select name="productType"> 
+											<option>Air</option>
+											<option>Accomodation </option>
+											<option>cruise </option>
+										</select>
+									 </td> -->
+									
+							</tr>
+							 <%-- ${productPojo.getRemarkList().get(0).by}  --%>
+														
+							<tr>
+
+								<td><b>Product Categry:</b></td>
+
+								<td><input type="text" name="productCatagry"
+									value="${productPojo.productCatagry}" /></td>
+							</tr>
+							<tr>
+
+								<td><b>Product SubCategry:</b></td>
+
+								<td><input type="text" name="productSubCatagry"
+									value="${productPojo.productSubCatagry}" /></td>
+							</tr>
+							<tr>
+
+								<td><b>Product Supplier Name:</b></td>
+
+								<td><input type="text" name="supplierName"
+									value="${productPojo.supplierName}" /></td>
+							</tr>
+							<%-- <tr>
+
+								<td><b>Product Supplier Address:</b></td>
+
+								<td><input type="text" name="supplierAddress"
+									value="${productPojo.supplierAddress}" /></td>
+							</tr>
+							<tr>
+
+								<td><b>Product Supplier Country:</b></td>
+
+								<td><input type="text" name="supplierCountry"
+									value="${productPojo.supplierCountry}" /></td>
+							</tr>
+							<tr>
+
+								<td><b>Product Specific Country:</b></td>
+
+								<td><input type="text" name="productSpecificCountry"
+									value="${productPojo.productSpecificCountry}" /></td>
+							</tr> --%>
+							<%-- <tr>
+
+								<td><b>Product CreationDate:</b></td>
+
+								<td><input type="text" name="creationdate"
+									value="${productPojo.creationdate}" /></td>
+							</tr> --%>
+
+							<tr>
+
+								<td><b>Product Description:</b></td>
+							
+								<td><input type="text" name="description" value="${productPojo.description}" /><%-- <textarea rows="5" cols="16" name="description">${productPojo.description}</textarea> --%></td>
+							</tr>
+							<tr>
+
+								<td><b>Remarks:</b></td>
+						
+								<%-- <td><input type="text" name="remarks" value="${productPojo.remarks}" /></td> --%>
+								<td><textarea rows="5" cols="16" name="remarks">${productPojo.remarks}</textarea> </td>
+								 <%-- <td><a href=""  onclick="openDialog(this.form, 'remarks.jsp?taskId=${taskid}')">View Remarks</a>  </td> --%>
+							</tr>
+							
+						</table>
+						
+						
+						<table>
+							<tr>
+								<td><input id="abc" type="submit" value="Save" name="button1"> 
+								<input 	id="abc" type="submit" name="button1" value="Submit"> 
+								<input id="abc" type="Reset" value="Reset">
+								<input 	id="abc" type="submit" name="button1" value="CANCEL"> </td>
+							</tr>
+						</table>
+						
+						
+					</center>
+					</td></tr>
+			<tr>
+				<td colspan="2"
+					style="background-color: rgb(0, 79, 147); text-align: right;">
+					<font color="white"> <i>Your in Product Configuration
+							Page</i>
+				</font>
+				</td>
+			</tr>
+		</table>
+		<input type="hidden" name="createdBy" value="${productPojo.createdBy}"/>
+		<input type="hidden" name="processInstanceID" value="${productPojo.processInstanceID}"/>
+		
+		
+	</form:form>
+
+</body>
+
+</body>
+</html>
+
+====================================END====================================
+
+	-----------------------------CreateAccomodation.jsp
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Layout Design</title>
+<style type="text/css">
+img {
+	float: left;
+	width: 110px;
+	height: 80px;
+	margin: 5px;
+}
+
+input#abc {
+	font-size: 15px;
+	font-weight: bold;
+	color: white;
+	width: 120px;
+	background-color: #004F93;
+	border-style: hidden;
+}
+
+td {
+	color: maroon;
+	font-size:20px;
+}
+td.report {
+	color: red;
+	font-size:15px;
+}
+</style>
+
+<script type="text/javascript"
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
+ <script type="text/javascript">
+function openDialog(form,url) {
+    var result = window.showModalDialog(url, form, "dialogWidth:600px; dialogHeight:350px; align:right");
+    
+}
+</script> 
+
+</head>
+<body>
+	<form:form id="hotelBookingEngineForm" name="HotelBookingEngineForm"
+		method="post" action="productCreateStart?taskId=${taskid}"
+		modelAttribute="productPojo">
+		<table width="1230" height="600" border="0">
+			<tr>
+				<td colspan="2"
+					style="background-color: rgb(0, 79, 147); height: 80px;"><img
+					src="./resources/images/cnk_logo.gif" /> <font color="white">
+						<center>
+							<b><i><h1>WorkFlow Management using Activiti Engine</h1></i></b>
+						</center>
+				</font>
+					<div align="right">
+						<a href="<c:url value="/j_spring_security_logout" />"
+							" style="color: white; text-decoration: none;"> LogOut</a>
+					</div></td>
+			</tr>
+
+			<tr valign="top">
+
+				<td
+					style="background-color: #eeeeee; height: 430px; text-align: top;"></br>
+
+					<font
+					style="font-size: x-large; font-style: italic; color: rgb(0, 79, 147);"><b><u>
+								Configure Accomodation Product :</u></b></font> </br> </br>
+					<center>
+						<table>
+							<tr>
+
+								<td><b>Product ID:</b></font></td>
+								<td><input type="hidden" name="productId"
+									value="${productPojo.productId}" readonly />${productPojo.productId}</td>
+									
+							</tr>
+							<tr>
+
+								<td><b>Product Name:</b></td>
+
+								<td><input type="text" name="productName"
+									value="${productPojo.productName}" /></td>
+							</tr>
+							<tr>
+
+								<td><b>Product Type:</b></td>
+
+								<td><input type="text" name="productType"
+									value="${productPojo.productType}" readonly/></td>
+									
+									<!-- <td>
+										<select name="productType"> 
+											<option>Air</option>
+											<option>Accomodation </option>
+											<option>cruise </option>
+										</select>
+									 </td> -->
+									
+							</tr>
+							 <%-- ${productPojo.getRemarkList().get(0).by}  --%>
+														
+							<tr>
+
+								<td><b>Product Categry:</b></td>
+
+								<td><input type="text" name="productCatagry"
+									value="${productPojo.productCatagry}" /></td>
+							</tr>
+							<tr>
+
+								<td><b>Product SubCategry:</b></td>
+
+								<td><input type="text" name="productSubCatagry"
+									value="${productPojo.productSubCatagry}" /></td>
+							</tr>
+							<tr>
+
+								<td><b>Product Supplier Name:</b></td>
+
+								<td><input type="text" name="supplierName"
+									value="${productPojo.supplierName}" /></td>
+							</tr>
+							<%-- <tr>
+
+								<td><b>Product Supplier Address:</b></td>
+
+								<td><input type="text" name="supplierAddress"
+									value="${productPojo.supplierAddress}" /></td>
+							</tr>
+							<tr>
+
+								<td><b>Product Supplier Country:</b></td>
+
+								<td><input type="text" name="supplierCountry"
+									value="${productPojo.supplierCountry}" /></td>
+							</tr> --%>
+							<tr>
+
+								<td><b>Product Specific Country:</b></td>
+
+								<td><input type="text" name="productSpecificCountry"
+									value="${productPojo.productSpecificCountry}" /></td>
+							</tr>
+							<%-- <tr>
+
+								<td><b>Product CreationDate:</b></td>
+
+								<td><input type="text" name="creationdate"
+									value="${productPojo.creationdate}" /></td>
+							</tr> --%>
+
+							<tr>
+
+								<td><b>Product Description:</b></td>
+							
+								<td><input type="text" name="description" value="${productPojo.description}" /><%-- <textarea rows="5" cols="16" name="description">${productPojo.description}</textarea> --%></td>
+							</tr>
+							<tr>
+
+								<td><b>Remarks:</b></td>
+						
+								<%-- <td><input type="text" name="remarks" value="${productPojo.remarks}" /></td> --%>
+								<td><textarea rows="5" cols="16" name="remarks">${productPojo.remarks}</textarea> </td>
+								 <%-- <td><a href=""  onclick="openDialog(this.form, 'remarks.jsp?taskId=${taskid}')">View Remarks</a>  </td> --%>
+							</tr>
+							
+						</table>
+						
+						
+						<table>
+							<tr>
+								<td><input id="abc" type="submit" value="Save" name="button1"> 
+								<input 	id="abc" type="submit" name="button1" value="Submit"> 
+								<input id="abc" type="Reset" value="Reset">
+								<input 	id="abc" type="submit" name="button1" value="CANCEL"> </td>
+							</tr>
+						</table>
+						
+						
+					</center>
+					</td></tr>
+			<tr>
+				<td colspan="2"
+					style="background-color: rgb(0, 79, 147); text-align: right;">
+					<font color="white"> <i>Your in Product Configuration
+							Page</i>
+				</font>
+				</td>
+			</tr>
+		</table>
+		<input type="hidden" name="createdBy" value="${productPojo.createdBy}"/>
+		<input type="hidden" name="processInstanceID" value="${productPojo.processInstanceID}"/>
+		
+		
+	</form:form>
+
+</body>
+
+</body>
+</html>
+
+
+=================================END=====================================
+	---------------------------ListOfPendingTaskForReview.jsp
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
+<%@ page isELIgnored="false"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Layout Design</title>
+<style type="text/css">
+img {
+	float: left;
+	width: 110px;
+	height: 80px;
+	margin: 5px;
+}
+
+a.two:link {color:#ff0000;text-decoration:none;}
+a.two:visited {color:#0000ff;text-decoration:none;}
+a.two:hover {font-size:150%;;text-decoration:none;background:#66ff66;}
+
+
+</style>
+</head>
+<body>
+
+	<table width="1230" height="600" border="0">
+		<tr>
+			<td colspan="2"
+				style="background-color: rgb(0, 79, 147); height: 80px;"><img
+				src="./resources/images/cnk_logo.gif" /> <font color="white">
+					<center>
+						<b><i><h1>WorkFlow Management using Activiti Engine</h1></i></b>
+					</center>
+			</font>
+				<div align="right">
+					<a href="<c:url value="/j_spring_security_logout" />"" style="color: white; text-decoration: none;">
+						LogOut</a>
+				</div></td>
+		</tr>
+
+		<tr valign="top">
+
+			<td
+				style="background-color: #eeeeee; height: 430px; text-align: top;"></br>
+				<font style="font-size: x-large; font-style: italic; color: rgb(0,79,147);"><b><u>
+							List Of Pending Tasks For Review:</u></b></font> </br></br>
+				<center>
+					<table border="1">
+
+						<tr bgcolor="Lightblue">
+						   <!-- <th><font align="center"><b>Process ID </b></font></th>
+							<th><font align="center"><b>Task ID </b></font></th> -->
+							
+							<th><font align="center"><b>NAME</b></font></th>
+							
+							<!-- <th><font align="center"><b>Product Name</b></font></th> -->
+							
+							<th><font align="center"><b>OWNER</b></font></th>
+							<th><font align="center"><b> DESCREPTION</b></font></th>
+							<th><font align="center"><b>CREATION DATE </b></font></th>
+							<th><font align="center"><b>ACTION</b></font></th>
+							
+							
+							<!-- <th><font align="center"><b>Priority </b></font></th>
+							<th><font align="center"><b>Status </b></font></th>
+							<th><font align="center"><b>Action</b></font></th> -->	
+						</tr>
+						
+						<c:forEach var="task1" items="${task}">
+							<tr>
+								<%-- <td>${task1.getProcessInstanceId()}</td>
+								<td>${task1.id}</td> --%>
+								
+								
+								<td>${task1.name}</td>
+								
+								<%-- <td><a class="two" href="reviewProductDetails?taskId=${task1.getString("id")}">${task1.getString("name")}</a></td> --%>
+								
+								<%-- <td>${task1.name}</td> --%>
+								
+								<td>${task1.getOwner()}</td> 
+								<td>${task1.description}</td>
+								<td>${task1.getCreateTime()}</td>
+								<td>
+									
+									<a class="two" href="claimTaskToUser?taskId=${task1.id}">CLAIM</a>
+								
+								</td>
+								
+								
+								<%-- <td>${task1.getString("owner")}</td> 
+								<td>${task1.getString("description")}</td>
+								<td>${task1.getString("createTime")}</td> --%>
+								
+								<%-- <td>${task1.getPriority()}</td>
+								<td>${task1.getDelegationState()}</td>
+								<td> <a href="reviewProductDetails?taskId=${task1.id}">REVIEW PRODUCT</a>
+								</td> --%>
+							</tr>
+						</c:forEach>
+						
+					</table>
+				</center>
+				
+		  </td>
+		</tr>		
+<tr>
+	<td><a href="backToHome" >BACK</a> </td>
+ </tr>
+		<tr>
+			<td colspan="2"
+				style="background-color: rgb(0, 79, 147); text-align: right;">
+				<font color="white"> <i>Your in Pending Task  Page</i>
+			</font>
+			</td>
+		</tr>
+	</table>
+
+</body>
+
+
+</body>
+</html>
+
+========================================END==============================
+
+	---------------------------ProductDetailsForApprovel.jsp
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib tagdir="/WEB-INF/tags" prefix="userTag" %> 
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Layout Design</title>
+<style type="text/css">
+img {
+	float: left;
+	width: 110px;
+	height: 80px;
+	margin: 5px;
+}
+
+input#abc {
+	font-size: 15px;
+	font-weight: bold;
+	color: white;
+	width: 120px;
+	background-color: #004F93;
+	border-style: hidden;
+}
+
+td {
+	color: maroon;
+	font-size:20px;
+}
+
+td.report {
+	color: red;
+	font-size:15px;
+}
+
+</style>
+<script type="text/javascript"
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
+ <script type="text/javascript">
+function openDialog(form,url) {
+    var result = window.showModalDialog(url, form, "dialogWidth:600px; dialogHeight:350px; align:right");
+    
+}
+</script> 
+</head>
+<body>
+
+	
+
+
+
+	
+	<form:form id="hotelBookingEngineForm" name="HotelBookingEngineForm"
+		method="post" action="approveProduct?taskId=${taskid}"
+		modelAttribute="productPojo">
+		<table width="1230" height="600" border="0">
+<tr>
+				<td colspan="2"
+					style="background-color: rgb(0, 79, 147); height: 80px;"><img
+					src="./resources/images/cnk_logo.gif" /> <font color="white">
+						<center>
+							<b><i><h1>WorkFlow Management using Activiti Engine</h1></i></b>
+						</center>
+				</font>
+					<div align="right">
+						<a href="<c:url value="/j_spring_security_logout" />"
+							" style="color: white; text-decoration: none;"> LogOut</a>
+					</div></td>
+			</tr>
+
+			<tr valign="top">
+
+				<td
+					style="background-color: #eeeeee; height: 430px; text-align: top;"></br>
+
+					<font
+					style="font-size: x-large; font-style: italic; color: rgb(0, 79, 147);"><b><u>
+								 Approve  Product Details:</u></b></font> </br> </br>
+					<center>
+						<table>
+							<tr>
+
+								<td>Product ID:</font></td>
+								<td><input type="hidden" name="productId"
+									value="${productPojo.productId}" readonly />${productPojo.productId}</td>
+							</tr>
+							<tr>
+
+								<td>Product Name:</td>
+
+								<td><input type="text" name="productName"
+									value="${productPojo.productName}" readonly/></td>
+									<td class="report"><userTag:StringCompareTag oldvalue="${oldValue.productName}" newvalue="${productPojo.productName}"></userTag:StringCompareTag></td>
+							</tr>
+							<tr>
+
+								<td>Product Type:</td>
+
+								<td><input type="text" name="productType"
+									value="${productPojo.productType}" readonly /></td>
+									<td class="report"><userTag:StringCompareTag oldvalue="${oldValue.productType}" newvalue="${productPojo.productType}"></userTag:StringCompareTag></td>
+							</tr>
+							<tr>
+
+								<td>Product Categry:</td>
+
+								<td><input type="text" name="productCatagry"
+									value="${productPojo.productCatagry}" readonly/></td>
+									<td class="report"><userTag:StringCompareTag oldvalue="${oldValue.productCatagry}" newvalue="${productPojo.productCatagry}"></userTag:StringCompareTag> </td>
+							</tr>
+							<tr>
+
+								<td>Product SubCategry:</td>
+
+								<td><input type="text" name="productSubCatagry"
+									value="${productPojo.productSubCatagry}" readonly/></td>
+									<td class="report"><userTag:StringCompareTag oldvalue="${oldValue.productSubCatagry}" newvalue="${productPojo.productSubCatagry}"></userTag:StringCompareTag></td>
+									
+							</tr>
+							<tr>
+
+								<td>Product Supplier Name:</td>
+
+								<td><input type="text" name="supplierName"
+									value="${productPojo.supplierName}" readonly/></td>
+									<td class="report"><userTag:StringCompareTag oldvalue="${oldValue.supplierName}" newvalue="${productPojo.supplierName}"></userTag:StringCompareTag></td>
+							</tr>
+							<tr>
+
+								<td>Product Supplier Address:</td>
+
+								<td><input type="text" name="supplierAddress"
+									value="${productPojo.supplierAddress}" readonly/></td>
+									<td class="report"><userTag:StringCompareTag oldvalue="${oldValue.supplierAddress}" newvalue="${productPojo.supplierAddress}"></userTag:StringCompareTag></td>
+							</tr>
+							<tr>
+
+								<td>Product Supplier Country:</td>
+
+								<td><input type="text" name="supplierCountry"
+									value="${productPojo.supplierCountry}" readonly/></td>
+									
+									<td class="report"><userTag:StringCompareTag oldvalue="${oldValue.supplierCountry}" newvalue="${productPojo.supplierCountry}"></userTag:StringCompareTag> </td>
+							</tr>
+							<tr>
+
+								<td>Product Specific Country:</td>
+
+								<td><input type="text" name="productSpecificCountry"
+									value="${productPojo.productSpecificCountry}" readonly /></td>
+									<td class="report"><userTag:StringCompareTag oldvalue="${oldValue.productSpecificCountry}" newvalue="${productPojo.productSpecificCountry}"></userTag:StringCompareTag></td>
+							</tr>
+							
+
+							<tr>
+
+								<td>Product Description:</td>
+
+								<td><input type="text" name="description" value="${productPojo.description}" readonly /></td>
+								<td class="report"><userTag:StringCompareTag oldvalue="${oldValue.description}" newvalue="${productPojo.description}"></userTag:StringCompareTag></td>
+							</tr>
+							
+								<tr>
+				<td>Product Created By</td>
+				<td><input type="text" name="createdBy"
+					value="${productPojo.createdBy}" readonly /></td>
+			</tr>
+			
+			<%-- <tr>
+
+								<td><b>Configurator Remarks:</b></td>
+
+								<td><input type="text" name="remarks"
+									value="${productPojo.remarks}" readonly/></td>
+							</tr> --%>
+			
+			<%-- <tr>
+				<td>Reviewer  Remarks</td>
+				<td>
+				 <textarea name="reviewerRemarks" style="width:310px;height:80px;white-space:wrap;overflow:auto;">${remarks1}</textarea>
+				 <c:forEach var="remark"  items="${remarks1}"> ${remark.value} Message By </c:forEach></textarea>
+			
+				 
+				</td>
+			</tr> --%>
+
+			<tr>
+				<td> Remarks</td>
+				<%-- <td><textarea style="width:310px;height:80px;white-space:nowrap;overflow:auto;" name="managerRemarks">${productPojo.managerRemarks}</textarea></td> --%>
+				<td><textarea style="width:310px;height:80px;white-space:nowrap;overflow:auto;" name="remarks">${productPojo.remarks}</textarea></td>
+				 <td><a href=""  onclick="openDialog(this.form, 'remarks.jsp?taskId=${taskid}')">View Remarks</a>  </td>
+			</tr>
+
+						</table>
+						<table>
+							<tr>
+								<td><input id="abc" type="submit" name="button1" value="APPROVE">
+								<td><input id="abc" type="submit" name="button1" value="REJECT">
+								<td><input id="abc" type="submit" name="button1" value="CANCEL">
+							
+							</tr>
+						</table>
+					</center></td>
+			</tr>
+
+			<tr>
+				<td colspan="2"
+					style="background-color: rgb(0, 79, 147); text-align: right;">
+					<font color="white"> <i>Your in Manager Approval Page</i>
+				</font>
+				</td>
+			</tr>
+		</table>
+		<input type="hidden" name="processInstanceID" value="${productPojo.processInstanceID}"/>
+	</form:form>
+</body>
+
+
+</body>
+</html>
+
+====================================END==================================
+	---------------------------------ProductHitoryReport.jsp
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
+
+<%@ page isELIgnored="false"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Layout Design</title>
+<style type="text/css">
+img {
+	float: left;
+	width: 110px;
+	height: 80px;
+	margin: 5px;
+}
+
+a.two:link {color:#ff0000;text-decoration:none;}
+a.two:visited {color:#0000ff;text-decoration:none;}
+a.two:hover {font-size:150%;;text-decoration:none;background:#66ff66;}
+a.two:active {background-color:#FF704D;} 
+
+
+
+.first{
+float: left;
+width: 40%;
+}
+.second{
+float: left;
+width:60%;
+}
+
+</style>
+</head>
+<body>
+
+
+	<table width="1230" height="600" border="0">
+		<tr>
+			<td colspan="2"
+				style="background-color: rgb(0, 79, 147); height: 80px;"><img
+				src="./resources/images/cnk_logo.gif" /> <font color="white">
+					<center>
+						<b><i><h1>WorkFlow Management using Activiti Engine</h1></i></b>
+					</center>
+			</font>
+				<div align="right">
+					<a href="<c:url value="/j_spring_security_logout"/>" style="color: white; text-decoration: none;">
+						LogOut</a>
+				</div></td>
+		</tr>
+
+		<tr valign="top">
+
+<td>
+			<div class="first">
+				<font style="font-size: x-large; font-style: italic; color: rgb(0,79,147);"><b><u>
+							List Of  Product History:</u></b></font> </br></br>
+				<center>
+					<table>
+
+						<tr bgcolor="Lightblue">
+											
+							<th><font align="center"><b>PROCCESS ID</b></font></th>
+													
+							<th><font align="center"><b>Product Name</b></font></th>
+							<th><font align="center"><b>Product Create Time</b></font></th>
+							<th><font align="center"><b>Report</b></font></th>
+													
+						</tr>
+						
+						<c:forEach var="task1" items="${hList}">
+							<tr>
+							
+								<td><a class="two" href="ViewProductHistoryStatusReport?processId=${task1.processId}&productId=${task1.productId}" >${task1.processId}</a></td>
+								<td>${task1.productName}</td>
+								<td>${task1.createTime}</td>
+								<td align="center"><a class="two" href="jasperReports1?processId=${task1.processId}&productId=${task1.productId}" >Report</a></td>
+								
+							</tr>
+						</c:forEach>
+						
+					</table>
+				</center>
+				</div>
+				
+				<div class="second">
+				<c:if test="${jsondata!=null}">
+					<font style="font-size: x-large; font-style: italic; color: rgb(0,79,147);"><b><u>
+							 Product Details  For : ${processId} </u></b></font> </br></br>
+				<center>
+					<table >
+		  
+		  				
+		   					<c:forEach var="task2" items="${jsondata}">
+							<tr>
+								<tr>
+								<td>Product ID </td> <td>${task2.getString("productId")}</td> </tr>
+								<tr><td>Product Name </td> <td>${task2.getString("productName")}</td> </tr>
+								<tr><td>Product Description </td> <td> ${task2.getString("description")}</td> </tr>
+								<tr><td>Product ProductCatagry </td> <td> ${task2.getString("productCatagry")}</td> </tr>
+								<tr><td>Product productType </td> <td>${task2.getString("productType")}</td> </tr>								
+								<tr><td>Product productSubCatagry </td> <td>${task2.getString("productSubCatagry")}</td> </tr>
+								<tr><td>Product productSpecificCountry </td> <td>${task2.getString("productSpecificCountry")}</td> </tr>
+								<tr><td>Product supplierName </td> <td>${task2.getString("supplierName")}</td> </tr>
+								<tr><td>Product supplierCountry </td> <td>${task2.getString("supplierCountry")}</td> </tr>
+								<tr><td>Product status </td> <td>${task2.getString("status")}</td> </tr>
+								<tr><td>Supplier Address </td> <td>${task2.getString("supplierAddress")}</td> </tr>
+								<tr><td>Created By </td> <td>${task2.getString("createdBy")}</td> </tr>
+								<tr><td>Remarks </td> <td>${task2.getString("remarks")}</td> </tr>
+								<%-- <tr><td>Reviewer Remarks </td> <td>${task2.getString("reviewerRemarks")}</td> </tr>
+								<tr><td>Manager Remarks </td> <td>${task2.getString("managerRemarks")}</td> </tr>
+								<tr><td>Approve By </td> <td>${task2.getString("approveBy")}</td> 	</tr> --%>
+							</tr>
+						</c:forEach>
+						</table>
+						</c:if>
+					</center>
+				</div>
+				<br/> <br/>
+				
+	</td>	  
+		 
+		</tr>		
+<tr>
+	<td><a href="backToHome" >BACK</a> </td>
+ </tr>
+		<tr>
+			<td colspan="2"
+				style="background-color: rgb(0, 79, 147); text-align: right;">
+				<font color="white"> <i>Your in Manager Task List Page</i>
+			</font>
+			</td>
+		</tr>
+	</table>
+
+</body>
+
+
+</body>
+</html>
+
+
+
+========================================END==================================
+
+	------------------------------ProuctCreatePage.jsp
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Layout Design</title>
+<style type="text/css">
+img {
+	float: left;
+	width: 110px;
+	height: 80px;
+	margin: 5px;
+}
+
+input#abc {
+	font-size: 15px;
+	font-weight: bold;
+	color: white;
+	width: 120px;
+	background-color: #004F93;
+	border-style: hidden;
+}
+
+td {
+	color: maroon;
+	font-size:20px;
+}
+td.report {
+	color: red;
+	font-size:15px;
+}
+</style>
+
+<script type="text/javascript"
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
+ <script type="text/javascript">
+function openDialog(form,url) {
+    var result = window.showModalDialog(url, form, "dialogWidth:600px; dialogHeight:350px; align:right");
+    
+}
+</script> 
+
+</head>
+<body>
+	<form:form id="hotelBookingEngineForm" name="HotelBookingEngineForm"
+		method="post" action="productCreateStart?taskId=${taskid}"
+		modelAttribute="productPojo">
+		<table width="1230" height="600" border="0">
+			<tr>
+				<td colspan="2"
+					style="background-color: rgb(0, 79, 147); height: 80px;"><img
+					src="./resources/images/cnk_logo.gif" /> <font color="white">
+						<center>
+							<b><i><h1>WorkFlow Management using Activiti Engine</h1></i></b>
+						</center>
+				</font>
+					<div align="right">
+						<a href="<c:url value="/j_spring_security_logout" />"
+							" style="color: white; text-decoration: none;"> LogOut</a>
+					</div></td>
+			</tr>
+
+			<tr valign="top">
+
+				<td
+					style="background-color: #eeeeee; height: 430px; text-align: top;"></br>
+
+					<font
+					style="font-size: x-large; font-style: italic; color: rgb(0, 79, 147);"><b><u>
+								Configure Product Details:</u></b></font> </br> </br>
+					<center>
+						<table>
+							<tr>
+
+								<td><b>Product ID:</b></font></td>
+								<td><input type="hidden" name="productId"
+									value="${productPojo.productId}" readonly />${productPojo.productId}</td>
+									
+							</tr>
+							<tr>
+
+								<td><b>Product Name:</b></td>
+
+								<td><input type="text" name="productName"
+									value="${productPojo.productName}" /></td>
+							</tr>
+							<tr>
+
+								<td><b>Product Type:</b></td>
+
+								<%-- <td><input type="text" name="productType"
+									value="${productPojo.productType}" /></td> --%>
+									
+									<td>
+										<select name="productType"> 
+											<option>Air</option>
+											<option>Accomodation </option>
+											<option>cruise </option>
+										</select>
+									 </td>
+									
+							</tr>
+							 <%-- ${productPojo.getRemarkList().get(0).by}  --%>
+														
+							<tr>
+
+								<td><b>Product Categry:</b></td>
+
+								<td><input type="text" name="productCatagry"
+									value="${productPojo.productCatagry}" /></td>
+							</tr>
+							<tr>
+
+								<td><b>Product SubCategry:</b></td>
+
+								<td><input type="text" name="productSubCatagry"
+									value="${productPojo.productSubCatagry}" /></td>
+							</tr>
+							<tr>
+
+								<td><b>Product Supplier Name:</b></td>
+
+								<td><input type="text" name="supplierName"
+									value="${productPojo.supplierName}" /></td>
+							</tr>
+							<tr>
+
+								<td><b>Product Supplier Address:</b></td>
+
+								<td><input type="text" name="supplierAddress"
+									value="${productPojo.supplierAddress}" /></td>
+							</tr>
+							<tr>
+
+								<td><b>Product Supplier Country:</b></td>
+
+								<td><input type="text" name="supplierCountry"
+									value="${productPojo.supplierCountry}" /></td>
+							</tr>
+							<tr>
+
+								<td><b>Product Specific Country:</b></td>
+
+								<td><input type="text" name="productSpecificCountry"
+									value="${productPojo.productSpecificCountry}" /></td>
+							</tr>
+							<%-- <tr>
+
+								<td><b>Product CreationDate:</b></td>
+
+								<td><input type="text" name="creationdate"
+									value="${productPojo.creationdate}" /></td>
+							</tr> --%>
+
+							<tr>
+
+								<td><b>Product Description:</b></td>
+							
+								<td><input type="text" name="description" value="${productPojo.description}" /><%-- <textarea rows="5" cols="16" name="description">${productPojo.description}</textarea> --%></td>
+							</tr>
+							<tr>
+
+								<td><b>Remarks:</b></td>
+						
+								<%-- <td><input type="text" name="remarks" value="${productPojo.remarks}" /></td> --%>
+								<td><textarea rows="5" cols="16" name="remarks">${productPojo.remarks}</textarea> </td>
+								 <%-- <td><a href=""  onclick="openDialog(this.form, 'remarks.jsp?taskId=${taskid}')">View Remarks</a>  </td> --%>
+							</tr>
+							
+						</table>
+						
+						
+						<table>
+							<tr>
+								<td><input id="abc" type="submit" value="Save" name="button1"> 
+								<input 	id="abc" type="submit" name="button1" value="Submit"> 
+								<input id="abc" type="Reset" value="Reset">
+								<input 	id="abc" type="submit" name="button1" value="CANCEL"> </td>
+							</tr>
+						</table>
+						
+						
+					</center>
+					</td></tr>
+			<tr>
+				<td colspan="2"
+					style="background-color: rgb(0, 79, 147); text-align: right;">
+					<font color="white"> <i>Your in Product Configuration
+							Page</i>
+				</font>
+				</td>
+			</tr>
+		</table>
+		<input type="hidden" name="createdBy" value="${productPojo.createdBy}"/>
+		<input type="hidden" name="processInstanceID" value="${productPojo.processInstanceID}"/>
+		
+		
+	</form:form>
+
+</body>
+
+</body>
+</html>
+
+=========================================END=================================
+
+ in web-inf for weblogic:-
+		weblogic.xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+<weblogic-web-app xmlns="http://xmlns.oracle.com/weblogic/weblogic-web-app" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd http://xmlns.oracle.com/weblogic/weblogic-web-app http://xmlns.oracle.com/weblogic/weblogic-web-app/1.0/weblogic-web-app.xsd">
+
+
+<container-descriptor>
+	<prefer-web-inf-classes>true</prefer-web-inf-classes>
+	
+</container-descriptor>
+
+</weblogic-web-app>
