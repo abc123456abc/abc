@@ -1,1 +1,142 @@
 aa
+
+This is based on weblogic server
+
+1) craete a build.xml file  put where is your pom.xml file
+
+==================================================================================================START File================================
+  <project name="start-stop-Server" default="startserver">
+	<!--<property name="bea.home" value="C:\bea103" />-->
+	<property name="weblogic.home" value="D:\weblogic\wls1211_dev\wlserver" />
+	<property name="domain.home" value="C:\home\myhome" />
+	<property name="domain.name" value="mydomain" />
+	<property name="host" value="localhost" />
+	<property name="port" value="7001" />
+	<property name="username" value="arun12345" />
+	<property name="password" value="arun12345" />
+	<property name="admin.server.name" value="myserver" />
+	
+	
+	<property name="browser" location="C:\Program Files\Mozilla Firefox\firefox.exe"/>
+	
+	
+	<!-- <property name="deploy.name" value="cnk-ibe-masters-web"/>
+	<property name="deploy.source" value="D:\travelerpibe\trunk\productsetup\cnk-ibe-masters-web\target\cnk-ibe-masters-web.war"/>
+	<property name="deploy.target" value="myserver" />-->
+	
+	<property name="deploy.name" value="ERPCoreUI-0.0.1-SNAPSHOT"/>
+	<property name="deploy.source" value="D:\Activiti-JPA-Demo\TravelERPActiviti\ERPCoreUI\target\ERPCoreUI-0.0.1-SNAPSHOT.war"/>
+			<property name="deploy.target" value="myserver" />
+		
+
+	<path id="wls.classpath">
+	    <fileset dir="${weblogic.home}/server/lib">
+	        <include name="web*.jar"/>
+	    </fileset>
+	</path>
+
+	<!-- Setting TaskDefinition -->
+	<taskdef name="wldeploy" classname="weblogic.ant.taskdefs.management.WLDeploy">
+	<classpath>
+	<pathelement location="${weblogic.home}/server/lib/weblogic.jar"/>
+	</classpath>
+	</taskdef>
+	<taskdef name="wlserver" classname="weblogic.ant.taskdefs.management.WLServer">
+		<classpath>
+			<pathelement location="${weblogic.home}/server/lib/weblogic.jar"/>
+			</classpath>
+	</taskdef>
+
+	<!-- Starting Server -->
+	
+	<target name="startserver">
+	  <wlserver dir="${domain.home}/${domain.name}" host="${host}" port="${port}"
+	            domainname="${domain.name}" servername="${admin.server.name}"
+	            action="start" username="${username}" password="${password}"
+	            weblogichome="${weblogic.home}" verbose="true"  noexit="true"
+	            protocol="t3" classpath="${weblogic.home}/server/lib/weblogic.jar" >
+	                   <jvmarg value="-server"/>
+		               <jvmarg value="-Xms256m"/>
+		               <jvmarg value="-Xmx512m"/>
+		               <jvmarg value="-XX:PermSize=128m"/>
+	                   <jvmarg value="-XX:MaxPermSize=256m"/>
+	   </wlserver>
+	</target>
+	
+	
+	<!-- Deploying Applications  -->
+	
+	<target name="deploy">
+		<wldeploy action="deploy"
+		          name="${deploy.name}"
+		          source="${deploy.source}"
+		          user="${username}"
+		          nostage="true"
+		          password="${password}"
+		          verbose="true"
+		          adminurl="t3://${host}:${port}" targets="${deploy.target}" />
+	</target>
+
+	<target name="stopserver">
+	  <wlserver dir="${domain.home}/${domain.name}" host="${host}" port="${port}"
+	            servername="${admin.server.name}" username="${username}" password="${password}"
+	            action="shutdown" beahome="${bea.home}" weblogichome="${weblogic.home}" forceshutdown="true"/>
+	</target>
+	
+	<!--  Sequence Define To Start Server and Deploy war file -->
+
+	<!-- <target name="startdemo" 
+	          description="Starting server and deploying war file"    >
+	    <echo message="Starting Server and Deploying War File..." />
+	    <antcall target="startserver" />
+	    <antcall target="deploy" />
+	  
+	  </target> -->
+	
+	<target name="browsIE" depends="startserver">
+		<echo>browsing.....</echo>
+		<exec executable="${browser}" spawn="true">
+		    <arg value="http://localhost:7001/ERPCoreUI-0.0.1-SNAPSHOT"/>
+		</exec>
+	</target>
+	
+</project>
+
+==================================================================================================END File================================
+2) In pom.xml call ant file (This is plugin to call ant in maven)
+	
+		<!-- ant  -->
+	
+	<build>
+	<plugins>
+	
+	<plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>ant-magic</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <tasks>
+
+                <ant antfile="build.xml" target="browsIE"/>
+              </tasks>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+			
+   </plugins>
+	</build>
+
+3) deploy the maven application as usual
+
+	eg- mvn package -Dmaven.test.skip=true
+
+
+
+
+		 
